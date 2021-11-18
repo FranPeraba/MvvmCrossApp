@@ -6,17 +6,25 @@
 
   <ItemGroup>
     <None Remove="MvvmCross" />
-    <None Remove="Rest\" />
     <None Remove="Models\" />
     <None Remove="Services\" />
     <None Remove="ViewModels\" />
     <None Remove="Resources\" />
+    <None Remove="MvvmCross.Plugin.Json" />
+    <None Remove="Microsoft.Extensions.Logging.Abstractions" />
+    <None Remove="Serilog" />
+    <None Remove="Newtonsoft.Json" />
+    <None Remove="Refit" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MvvmCross" Version="8.0.2" />
+    <PackageReference Include="MvvmCross.Plugin.Json" Version="8.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
+    <PackageReference Include="Serilog" Version="2.10.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Refit" Version="6.1.15" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Rest\" />
     <Folder Include="Models\" />
     <Folder Include="Services\" />
     <Folder Include="ViewModels\" />

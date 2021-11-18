@@ -13,11 +13,6 @@ namespace MvvmCrossApp.Core
                 .AsInterfaces()
                 .RegisterAsLazySingleton();
 
-            CreatableTypes()
-                .EndingWith("Client")
-                .AsInterfaces()
-                .RegisterAsLazySingleton();
-
             RegisterCustomAppStart<AppStart>();
         }
     }
