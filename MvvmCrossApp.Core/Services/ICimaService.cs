@@ -7,7 +7,7 @@ namespace MvvmCrossApp.Core.Services
 {
     public interface ICimaService
     {
-        [Get("/medicamentos?multiple={query}")]
+        [Get("/medicamentos?multiple={query}&pagesize=25")]
         Task<PagedResult<Medicines>> GetMedicinesAsync(string query);
     }
 }

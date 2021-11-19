@@ -46,5 +46,11 @@ namespace MvvmCrossApp.Core.Resources {
                 resourceCulture = value;
             }
         }
+        
+        public static string QueryHintSearch {
+            get {
+                return ResourceManager.GetString("QueryHintSearch", resourceCulture);
+            }
+        }
     }
 }
