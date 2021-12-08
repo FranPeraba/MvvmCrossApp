@@ -1,6 +1,9 @@
 ﻿using System;
+using MvvmCross;
 using MvvmCross.IoC;
 using MvvmCross.ViewModels;
+using MvvmCrossApp.Core.Services;
+using Refit;
 
 namespace MvvmCrossApp.Core
 {
@@ -14,6 +17,8 @@ namespace MvvmCrossApp.Core
                 .RegisterAsLazySingleton();
 
             RegisterCustomAppStart<AppStart>();
+            
+            Mvx.IoCProvider.LazyConstructAndRegisterSingleton(() => RestService.For<ICimaService>(Constants.BaseUrl));
         }
     }
 }

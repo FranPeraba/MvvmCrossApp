@@ -6,7 +6,6 @@ using MvvmCross.Navigation;
 using MvvmCross.ViewModels;
 using MvvmCrossApp.Core.Models;
 using MvvmCrossApp.Core.Services;
-using Refit;
 
 namespace MvvmCrossApp.Core.ViewModels
 {
@@ -14,11 +13,13 @@ namespace MvvmCrossApp.Core.ViewModels
     {
         readonly IMvxNavigationService _navigationService;
         readonly ILogger<SearchViewModel> _logger;
+        readonly ICimaService _cimaService;
 
-        public SearchViewModel(IMvxNavigationService navigationService, ILogger<SearchViewModel> logger)
+        public SearchViewModel(IMvxNavigationService navigationService, ILogger<SearchViewModel> logger, ICimaService cimaService)
         {
             _navigationService = navigationService;
             _logger = logger;
+            _cimaService = cimaService;
 
             Medicines = new List<Medicines>();
         }
@@ -63,8 +64,7 @@ namespace MvvmCrossApp.Core.ViewModels
             
             try
             {
-                var cimaService = CimaService.GetCimaService();
-                await cimaService.GetMedicinesAsync(query)
+                await _cimaService.GetMedicinesAsync(query)
                     .ContinueWith(response =>
                     {
                         if (response.IsCompleted && response.Status == TaskStatus.RanToCompletion)
