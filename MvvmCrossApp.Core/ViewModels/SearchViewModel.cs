@@ -6,15 +6,16 @@ using MvvmCross.Navigation;
 using MvvmCross.ViewModels;
 using MvvmCrossApp.Core.Models;
 using MvvmCrossApp.Core.Services;
+using Refit;
 
 namespace MvvmCrossApp.Core.ViewModels
 {
-    public class SearchMainViewModel : MvxViewModel
+    public class SearchViewModel : MvxViewModel
     {
         readonly IMvxNavigationService _navigationService;
-        readonly ILogger<SearchMainViewModel> _logger;
+        readonly ILogger<SearchViewModel> _logger;
 
-        public SearchMainViewModel(IMvxNavigationService navigationService, ILogger<SearchMainViewModel> logger)
+        public SearchViewModel(IMvxNavigationService navigationService, ILogger<SearchViewModel> logger)
         {
             _navigationService = navigationService;
             _logger = logger;

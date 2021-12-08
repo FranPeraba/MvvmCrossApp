@@ -15,7 +15,7 @@ namespace MvvmCrossApp.Droid.Views
         Medicines _item;
         CancellationTokenSource _cancellationTokenSource;
 
-        public MedicinesViewHolder(View itemView, IMvxAndroidBindingContext context, SearchMainViewModel vm) : base(itemView, context)
+        public MedicinesViewHolder(View itemView, IMvxAndroidBindingContext context, SearchViewModel vm) : base(itemView, context)
         {
             VM = vm;
 
@@ -25,7 +25,7 @@ namespace MvvmCrossApp.Droid.Views
             itemView.Click += Cell_Click;
         }
 
-        public SearchMainViewModel VM { get; set; }
+        public SearchViewModel VM { get; set; }
 
         public Medicines Item
         {

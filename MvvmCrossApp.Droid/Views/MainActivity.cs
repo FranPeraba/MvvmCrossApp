@@ -17,7 +17,7 @@ namespace MvvmCrossApp.Droid.Views
 {
     [MvxActivityPresentation]
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = true)]
-    public class MainActivity : MvxActivity<SearchMainViewModel>, SearchView.IOnQueryTextListener
+    public class MainActivity : MvxActivity<SearchViewModel>, SearchView.IOnQueryTextListener
     {
         MvxRecyclerView _recyclerView;
         MedicinesAdapter _adapter;
@@ -69,7 +69,7 @@ namespace MvvmCrossApp.Droid.Views
 
         void SetupBindings()
         {
-            var bindingSet = this.CreateBindingSet<MainActivity, SearchMainViewModel>();
+            var bindingSet = this.CreateBindingSet<MainActivity, SearchViewModel>();
             bindingSet.Bind(_adapter).For(v => v.ItemsSource).To(vm => vm.Medicines);
             bindingSet.Apply();
             

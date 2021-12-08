@@ -68,6 +68,12 @@
         <Reference Include="System.Numerics.Vectors" />
     </ItemGroup>
     <ItemGroup>
+      <PackageReference Include="Newtonsoft.Json">
+        <Version>13.0.1</Version>
+      </PackageReference>
+      <PackageReference Include="Refit">
+        <Version>6.1.15</Version>
+      </PackageReference>
       <PackageReference Include="Xamarin.Essentials" Version="1.6.1" />
       <PackageReference Include="MvvmCross">
         <Version>8.0.2</Version>
@@ -80,9 +86,6 @@
       </PackageReference>
       <PackageReference Include="Serilog.Sinks.Xamarin">
         <Version>0.2.0.64</Version>
-      </PackageReference>
-      <PackageReference Include="Refit">
-        <Version>6.1.15</Version>
       </PackageReference>
     </ItemGroup>
     <ItemGroup>
@@ -145,6 +148,10 @@
         <Compile Include="AppDelegate.cs" />
         <Compile Include="Setup.cs" />
         <Compile Include="Main.cs" />
+        <Compile Include="Views\MedicineCell.cs" />
+        <Compile Include="Views\MedicineCell.designer.cs">
+          <DependentUpon>MedicineCell.cs</DependentUpon>
+        </Compile>
         <Compile Include="Views\SearchView.cs" />
         <Compile Include="Views\SearchView.designer.cs">
           <DependentUpon>SearchView.cs</DependentUpon>

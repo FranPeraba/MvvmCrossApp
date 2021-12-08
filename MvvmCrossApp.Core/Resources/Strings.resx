@@ -150,4 +150,7 @@
     <data name="QueryHintSearch" xml:space="preserve">
     <value>Medicamento, principio activo, código nacional o número de registro</value>
   </data>
+    <data name="SearchMedicine" xml:space="preserve">
+        <value>Busca tu medicamento</value>
+    </data>
 </root>
