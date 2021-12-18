@@ -15,7 +15,8 @@ namespace MvvmCrossApp.Core.ViewModels
         readonly ILogger<SearchViewModel> _logger;
         readonly ICimaService _cimaService;
 
-        public SearchViewModel(IMvxNavigationService navigationService, ILogger<SearchViewModel> logger, ICimaService cimaService)
+        public SearchViewModel(IMvxNavigationService navigationService, ILogger<SearchViewModel> logger, 
+            ICimaService cimaService)
         {
             _navigationService = navigationService;
             _logger = logger;

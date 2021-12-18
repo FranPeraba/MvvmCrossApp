@@ -37,6 +37,8 @@ namespace MvvmCrossApp.Droid.Views
             SetupRecyclerView();
 
             SetupBindings();
+
+            Title = Strings.SearchMedicine;
         }
 
         protected override void OnDestroy()

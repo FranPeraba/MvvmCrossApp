@@ -18514,19 +18514,22 @@ namespace MvvmCrossApp.Droid
 			public const int preference_copied = 2131624047;
 			
 			// aapt resource value: 0x7F0E0070
-			public const int search_menu_title = 2131624048;
+			public const int search_medicine = 2131624048;
 			
 			// aapt resource value: 0x7F0E0071
-			public const int status_bar_notification_info_overflow = 2131624049;
+			public const int search_menu_title = 2131624049;
 			
 			// aapt resource value: 0x7F0E0072
-			public const int summary_collapsed_preference_list = 2131624050;
+			public const int status_bar_notification_info_overflow = 2131624050;
 			
 			// aapt resource value: 0x7F0E0073
-			public const int v7_preference_off = 2131624051;
+			public const int summary_collapsed_preference_list = 2131624051;
 			
 			// aapt resource value: 0x7F0E0074
-			public const int v7_preference_on = 2131624052;
+			public const int v7_preference_off = 2131624052;
+			
+			// aapt resource value: 0x7F0E0075
+			public const int v7_preference_on = 2131624053;
 			
 			static String()
 			{

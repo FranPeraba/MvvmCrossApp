@@ -32,7 +32,7 @@ namespace MvvmCrossApp.iOS.Views
             
             SetupTable();
             
-            SetUpSearchController();
+            SetupSearchController();
             
             SetupBindings();
 
@@ -84,7 +84,7 @@ namespace MvvmCrossApp.iOS.Views
 	        TableView.ReloadData();
         }
 
-        void SetUpSearchController()
+        void SetupSearchController()
         {
 	        _searchController = new UISearchController
 	        {
