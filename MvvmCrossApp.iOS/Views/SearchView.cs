@@ -13,7 +13,7 @@ using UIKit;
 namespace MvvmCrossApp.iOS.Views
 {
 	[MvxFromStoryboard("MainView")]
-	public partial class SearchView : MvxTableViewController<SearchViewModel>, IUISearchResultsUpdating, IUISearchBarDelegate,
+	public partial class SearchView : MvxTableViewController<SearchMedicinesViewModel>, IUISearchResultsUpdating, IUISearchBarDelegate,
 		IUITabBarControllerDelegate, IUISearchControllerDelegate
 	{
 		List<Medicines> _medicines;

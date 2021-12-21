@@ -15,7 +15,7 @@ namespace MvvmCrossApp.Core
 
         protected override Task NavigateToFirstViewModel(object hint = null)
         {
-            return NavigationService.Navigate<SearchViewModel>();
+            return NavigationService.Navigate<SearchMedicinesViewModel>();
         }
     }
 }

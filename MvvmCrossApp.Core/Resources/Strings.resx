@@ -151,6 +151,6 @@
     <value>Medicamento, principio activo, código nacional o número de registro</value>
   </data>
     <data name="SearchMedicine" xml:space="preserve">
-        <value>Busca tu medicamento</value>
+        <value>Busca tu medicamento aquí</value>
     </data>
 </root>

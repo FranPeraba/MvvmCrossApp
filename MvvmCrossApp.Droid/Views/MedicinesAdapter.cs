@@ -18,7 +18,7 @@ namespace MvvmCrossApp.Droid.Views
         {
         }
 
-        public SearchViewModel VM { get; set; }
+        public SearchMedicinesViewModel VM { get; set; }
 
         protected override void SetItemsSource(IEnumerable value)
         {

@@ -9,13 +9,13 @@ using MvvmCrossApp.Core.Services;
 
 namespace MvvmCrossApp.Core.ViewModels
 {
-    public class SearchViewModel : MvxViewModel
+    public class SearchMedicinesViewModel : MvxViewModel
     {
         readonly IMvxNavigationService _navigationService;
-        readonly ILogger<SearchViewModel> _logger;
+        readonly ILogger<SearchMedicinesViewModel> _logger;
         readonly ICimaService _cimaService;
 
-        public SearchViewModel(IMvxNavigationService navigationService, ILogger<SearchViewModel> logger, 
+        public SearchMedicinesViewModel(IMvxNavigationService navigationService, ILogger<SearchMedicinesViewModel> logger, 
             ICimaService cimaService)
         {
             _navigationService = navigationService;
