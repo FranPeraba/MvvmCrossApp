@@ -10,7 +10,7 @@ namespace MvvmCrossApp.Core.Services
         [Get("/medicamentos?multiple={query}&pagesize=25")]
         Task<PagedResult<Medicines>> GetMedicinesAsync(string query);
 
-        [Get("/medicamento?{param1}={param2}")]
-        Task<PagedResult<Medicine>> GetMedicineAsync(string param1, string param2);
+        [Get("/medicamento?nregistro={query}")]
+        Task<Medicine> GetMedicineAsync(string query);
     }
 }

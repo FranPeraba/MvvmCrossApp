@@ -153,4 +153,7 @@
     <data name="SearchMedicine" xml:space="preserve">
         <value>Busca tu medicamento aquí</value>
     </data>
+    <data name="Medicine" xml:space="preserve">
+        <value>Medicamento</value>
+    </data>
 </root>

@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using MvvmCross.Base;
+using MvvmCross.Commands;
+using MvvmCross.IoC;
 using MvvmCross.Navigation;
 using MvvmCross.ViewModels;
 using MvvmCrossApp.Core.Models;
@@ -14,16 +17,22 @@ namespace MvvmCrossApp.Core.ViewModels
         readonly IMvxNavigationService _navigationService;
         readonly ILogger<SearchMedicinesViewModel> _logger;
         readonly ICimaService _cimaService;
+        readonly IMvxIoCProvider _ioCProvider;
 
         public SearchMedicinesViewModel(IMvxNavigationService navigationService, ILogger<SearchMedicinesViewModel> logger, 
-            ICimaService cimaService)
+            ICimaService cimaService, IMvxIoCProvider ioCProvider)
         {
             _navigationService = navigationService;
             _logger = logger;
             _cimaService = cimaService;
+            _ioCProvider = ioCProvider;
 
             Medicines = new List<Medicines>();
+            _medicineClickCommand = new MvxCommand<Medicines>(OnMedicineClickCommand);
         }
+
+        IMvxCommand<Medicines> _medicineClickCommand;
+        public IMvxCommand<Medicines> MedicineClickCommand => _medicineClickCommand;
 
         bool _isLoading;
         public bool IsLoading
@@ -62,7 +71,6 @@ namespace MvvmCrossApp.Core.ViewModels
         async Task SearchMedicinesAsync(string query)
         {
             IsLoading = true;
-            
             try
             {
                 await _cimaService.GetMedicinesAsync(query)
@@ -70,20 +78,31 @@ namespace MvvmCrossApp.Core.ViewModels
                     {
                         if (response.IsCompleted && response.Status == TaskStatus.RanToCompletion)
                         {
-                            IsLoading = false;
                             _medicines = new List<Medicines>();
-                            Medicines.AddRange(response.Result.Resultados);
-                            RaisePropertyChanged(() => Medicines);
+                            _ioCProvider.Resolve<IMvxMainThreadAsyncDispatcher>()
+                                .ExecuteOnMainThreadAsync((() =>
+                                {
+                                    IsLoading = false;
+                                    Medicines.AddRange(response.Result.Resultados);
+                                }));
                         }
                         else if (response.IsFaulted)
+                        {
                             IsLoading = false;
+                            _logger.LogError("Fail to get medicines");
+                        }
                     }, TaskScheduler.FromCurrentSynchronizationContext()).ConfigureAwait(false);
 
             }
             catch (Exception e)
             {
-                _logger.LogError("Fail to get medicines", e);
+                _logger.LogError("Fail to get medicines", e.Message);
             }
+        }
+
+        void OnMedicineClickCommand(Medicines medicine)
+        {
+            _navigationService.Navigate<DetailMedicineViewModel, Medicines>(medicine);
         }
     }
 }

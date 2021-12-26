@@ -2,4 +2,5 @@
     <string name="app_name">MvvmCrossApp.Droid</string>
     <string name="action_settings">Settings</string>
     <string name="search_medicine">Busca tu medicamento</string>
+    <string name="prospect">Prospecto</string>
 </resources>

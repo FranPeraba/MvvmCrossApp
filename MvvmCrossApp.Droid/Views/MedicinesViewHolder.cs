@@ -20,9 +20,6 @@ namespace MvvmCrossApp.Droid.Views
             VM = vm;
 
             _itemName = itemView.FindViewById<TextView>(Resource.Id.item_name);
-
-            itemView.Click -= Cell_Click;
-            itemView.Click += Cell_Click;
         }
 
         public SearchMedicinesViewModel VM { get; set; }
@@ -46,9 +43,11 @@ namespace MvvmCrossApp.Droid.Views
             _itemName.Text = _item.Nombre;
         }
 
-        void Cell_Click(object sender, EventArgs e)
+        protected override void OnItemViewClick(object sender, EventArgs e)
         {
-            //Todo navigation to detail
+            base.OnItemViewClick(sender, e);
+            if (VM.MedicineClickCommand.CanExecute(Item))
+                VM.MedicineClickCommand.Execute(Item);
         }
     }
 }

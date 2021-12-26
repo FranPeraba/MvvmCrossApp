@@ -27,6 +27,7 @@ namespace MvvmCrossApp.Droid.Views
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+            
             SetContentView(Resource.Layout.activity_main);
 
             _progressBar = FindViewById<ProgressBar>(Resource.Id.progress_bar);
@@ -41,10 +42,16 @@ namespace MvvmCrossApp.Droid.Views
             Title = Strings.SearchMedicine;
         }
 
-        protected override void OnDestroy()
+        protected override void OnPause()
         {
-            base.OnDestroy();
+            base.OnPause();
             ClearBindings();
+        }
+
+        protected override void OnResume()
+        {
+            base.OnResume();
+            SetupBindings();
         }
 
         void SetupSearchView()
