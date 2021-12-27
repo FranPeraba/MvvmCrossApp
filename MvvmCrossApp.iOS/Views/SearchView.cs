@@ -39,9 +39,15 @@ namespace MvvmCrossApp.iOS.Views
             Title = Strings.SearchMedicine;
         }
 
-        public override void ViewWillDisappear(bool animated)
+        public override void ViewDidAppear(bool animated)
         {
-	        base.ViewWillDisappear(animated);
+	        base.ViewDidAppear(animated);
+	        SetupBindings();
+        }
+
+        public override void ViewDidDisappear(bool animated)
+        {
+	        base.ViewDidDisappear(animated);
 	        ClearBindings();
         }
 
@@ -150,6 +156,8 @@ namespace MvvmCrossApp.iOS.Views
         public override void RowSelected(UITableView tableView, NSIndexPath indexPath)
         {
 	        tableView.DeselectRow(indexPath, true);
+	        if (ViewModel.MedicineClickCommand.CanExecute(_medicines[indexPath.Row]))
+		        ViewModel.MedicineClickCommand.Execute(_medicines[indexPath.Row]);
         }
 	}
 }

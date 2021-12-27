@@ -25,18 +25,11 @@ namespace MvvmCrossApp.Core.ViewModels
             _cimaService = cimaService;
             _ioCProvider = ioCProvider;
 
-            _openProspectCommandAsync = new MvxAsyncCommand(OpenProspectAsync);
+            _openDocumentCommandAsync = new MvxAsyncCommand(OpenDocumentAsync);
         }
 
-        IMvxAsyncCommand _openProspectCommandAsync;
-        public IMvxAsyncCommand OpenProspectCommandAsync => _openProspectCommandAsync;
-        
-        bool _isLoading;
-        public bool IsLoading
-        {
-            get => _isLoading;
-            private set => SetProperty(ref _isLoading, value);
-        }
+        IMvxAsyncCommand _openDocumentCommandAsync;
+        public IMvxAsyncCommand OpenDocumentCommandAsync => _openDocumentCommandAsync;
 
         string _medicine;
         public string Medicine
@@ -95,7 +88,7 @@ namespace MvvmCrossApp.Core.ViewModels
             }
         }
 
-        async Task OpenProspectAsync()
+        async Task OpenDocumentAsync()
         {
             if (Documents.Count >= 2)
             {
@@ -104,20 +97,12 @@ namespace MvvmCrossApp.Core.ViewModels
                 else
                     await Browser.OpenAsync(Documents[1].Url, BrowserLaunchMode.SystemPreferred);
             }
-            else if (Documents.Count == 0)
-            {
-                // Todo
-            }
             else if (Documents[0].Tipo == 2)
             {
                 if (!string.IsNullOrEmpty(Documents[0].UrlHtml))
                     await Browser.OpenAsync(Documents[0].UrlHtml, BrowserLaunchMode.SystemPreferred);
                 else
                     await Browser.OpenAsync(Documents[0].Url, BrowserLaunchMode.SystemPreferred);
-            }
-            else
-            {
-                // Todo
             }
         }
     }

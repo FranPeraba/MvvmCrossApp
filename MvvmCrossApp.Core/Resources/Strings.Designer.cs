@@ -62,5 +62,11 @@ namespace MvvmCrossApp.Core.Resources {
                 return ResourceManager.GetString("Medicine", resourceCulture);
             }
         }
+        
+        public static string Prospect {
+            get {
+                return ResourceManager.GetString("Prospect", resourceCulture);
+            }
+        }
     }
 }

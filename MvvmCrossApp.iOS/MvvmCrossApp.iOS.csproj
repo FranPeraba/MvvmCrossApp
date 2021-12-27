@@ -145,6 +145,10 @@
         <Compile Include="AppDelegate.cs" />
         <Compile Include="Setup.cs" />
         <Compile Include="Main.cs" />
+        <Compile Include="Views\DetailView.cs" />
+        <Compile Include="Views\DetailView.designer.cs">
+          <DependentUpon>DetailView.cs</DependentUpon>
+        </Compile>
         <Compile Include="Views\MedicineCell.cs" />
         <Compile Include="Views\MedicineCell.designer.cs">
           <DependentUpon>MedicineCell.cs</DependentUpon>

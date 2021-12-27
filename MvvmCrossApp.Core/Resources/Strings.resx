@@ -156,4 +156,7 @@
     <data name="Medicine" xml:space="preserve">
         <value>Medicamento</value>
     </data>
+    <data name="Prospect" xml:space="preserve">
+        <value>Prospecto</value>
+    </data>
 </root>

@@ -75,8 +75,8 @@ namespace MvvmCrossApp.Droid.Views
 
         void ProspectButton_OnClick(object sender, EventArgs e)
         {
-            if (ViewModel.OpenProspectCommandAsync.CanExecute())
-                ViewModel.OpenProspectCommandAsync.ExecuteAsync();
+            if (ViewModel.OpenDocumentCommandAsync.CanExecute())
+                ViewModel.OpenDocumentCommandAsync.ExecuteAsync();
         }
     }
 }

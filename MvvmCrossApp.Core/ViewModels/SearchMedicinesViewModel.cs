@@ -27,8 +27,8 @@ namespace MvvmCrossApp.Core.ViewModels
             _cimaService = cimaService;
             _ioCProvider = ioCProvider;
 
-            Medicines = new List<Medicines>();
-            _medicineClickCommand = new MvxCommand<Medicines>(OnMedicineClickCommand);
+            Medicines = new MvxObservableCollection<Medicines>();
+            _medicineClickCommand = new MvxCommand<Medicines>(OnMedicineClick);
         }
 
         IMvxCommand<Medicines> _medicineClickCommand;
@@ -58,13 +58,13 @@ namespace MvvmCrossApp.Core.ViewModels
                 if (string.IsNullOrEmpty(value))
                 {
                     _medicines = new List<Medicines>();
+                    RaisePropertyChanged(() => Medicines);
                 }
                 else if (value.Length >= 3)
                 {
                     SearchMedicinesAsync(value).ConfigureAwait(false);
                 }
                 RaisePropertyChanged(() => SearchTerm);
-                RaisePropertyChanged(() => Medicines);
             }
         }
 
@@ -78,12 +78,13 @@ namespace MvvmCrossApp.Core.ViewModels
                     {
                         if (response.IsCompleted && response.Status == TaskStatus.RanToCompletion)
                         {
-                            _medicines = new List<Medicines>();
                             _ioCProvider.Resolve<IMvxMainThreadAsyncDispatcher>()
                                 .ExecuteOnMainThreadAsync((() =>
                                 {
                                     IsLoading = false;
+                                    _medicines = new List<Medicines>();
                                     Medicines.AddRange(response.Result.Resultados);
+                                    RaisePropertyChanged(() => Medicines);
                                 }));
                         }
                         else if (response.IsFaulted)
@@ -100,7 +101,7 @@ namespace MvvmCrossApp.Core.ViewModels
             }
         }
 
-        void OnMedicineClickCommand(Medicines medicine)
+        void OnMedicineClick(Medicines medicine)
         {
             _navigationService.Navigate<DetailMedicineViewModel, Medicines>(medicine);
         }
