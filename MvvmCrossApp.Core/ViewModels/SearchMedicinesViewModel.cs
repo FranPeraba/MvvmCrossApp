@@ -20,7 +20,7 @@ namespace MvvmCrossApp.Core.ViewModels
         {
             _cimaService = cimaService;
 
-            Medicines = new MvxObservableCollection<Medicines>();
+            Medicines = new List<Medicines>();
             _medicineClickCommand = new MvxCommand<Medicines>(OnMedicineClick);
         }
 
@@ -43,7 +43,7 @@ namespace MvvmCrossApp.Core.ViewModels
                 _searchTerm = value;
                 if (string.IsNullOrEmpty(value))
                 {
-                    _medicines = new List<Medicines>();
+                    Medicines.Clear();
                     RaisePropertyChanged(() => Medicines);
                 }
                 else if (value.Length >= 3)
@@ -70,7 +70,7 @@ namespace MvvmCrossApp.Core.ViewModels
                                 .ExecuteOnMainThreadAsync((() =>
                                 {
                                     IsLoading = false;
-                                    _medicines = new List<Medicines>();
+                                    Medicines.Clear();
                                     Medicines.AddRange(response.Result.Resultados);
                                     RaisePropertyChanged(() => Medicines);
                                 }));

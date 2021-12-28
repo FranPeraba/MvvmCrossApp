@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvvmCrossApp.Droid", "MvvmC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvvmCrossApp.iOS", "MvvmCrossApp.iOS\MvvmCrossApp.iOS.csproj", "{08DA3BD7-07FC-4B3A-A8BD-DE8BDCA1D3EB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvvmCrossApp.Tests", "MvvmCrossApp.Tests\MvvmCrossApp.Tests.csproj", "{3567CC16-CBAB-4335-AD40-956D3E14FEE0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,18 @@ Global
 		{08DA3BD7-07FC-4B3A-A8BD-DE8BDCA1D3EB}.Debug|iPhone.Build.0 = Debug|iPhone
 		{08DA3BD7-07FC-4B3A-A8BD-DE8BDCA1D3EB}.Release|iPhone.ActiveCfg = Release|iPhone
 		{08DA3BD7-07FC-4B3A-A8BD-DE8BDCA1D3EB}.Release|iPhone.Build.0 = Release|iPhone
+		{3567CC16-CBAB-4335-AD40-956D3E14FEE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3567CC16-CBAB-4335-AD40-956D3E14FEE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3567CC16-CBAB-4335-AD40-956D3E14FEE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3567CC16-CBAB-4335-AD40-956D3E14FEE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3567CC16-CBAB-4335-AD40-956D3E14FEE0}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{3567CC16-CBAB-4335-AD40-956D3E14FEE0}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{3567CC16-CBAB-4335-AD40-956D3E14FEE0}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{3567CC16-CBAB-4335-AD40-956D3E14FEE0}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{3567CC16-CBAB-4335-AD40-956D3E14FEE0}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{3567CC16-CBAB-4335-AD40-956D3E14FEE0}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{3567CC16-CBAB-4335-AD40-956D3E14FEE0}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{3567CC16-CBAB-4335-AD40-956D3E14FEE0}.Release|iPhone.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
