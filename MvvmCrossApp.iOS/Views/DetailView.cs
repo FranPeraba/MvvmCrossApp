@@ -39,6 +39,8 @@ namespace MvvmCrossApp.iOS.Views
 
 		void SetupUI()
 		{
+			ActivityIndicator.StartAnimating();
+			
 			MedicineLabel.Text = ViewModel.Medicine;
 			
 			ProspectButton.SetTitle(Strings.Prospect, UIControlState.Normal);

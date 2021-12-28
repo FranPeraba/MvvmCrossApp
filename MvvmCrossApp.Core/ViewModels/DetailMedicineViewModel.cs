@@ -5,25 +5,22 @@ using Microsoft.Extensions.Logging;
 using MvvmCross.Base;
 using MvvmCross.Commands;
 using MvvmCross.IoC;
-using MvvmCross.ViewModels;
+using MvvmCross.Navigation;
 using MvvmCrossApp.Core.Models;
 using MvvmCrossApp.Core.Services;
 using Xamarin.Essentials;
 
 namespace MvvmCrossApp.Core.ViewModels
 {
-    public class DetailMedicineViewModel : MvxViewModel<Medicines>
+    public class DetailMedicineViewModel : BaseViewModel<Medicines>
     {
-        readonly ILogger<SearchMedicinesViewModel> _logger;
         readonly ICimaService _cimaService;
-        readonly IMvxIoCProvider _ioCProvider;
         string _nregistro;
 
-        public DetailMedicineViewModel(ILogger<SearchMedicinesViewModel> logger, ICimaService cimaService, IMvxIoCProvider ioCProvider)
+        public DetailMedicineViewModel(IMvxNavigationService navigationService, ILogger<DetailMedicineViewModel> logger, 
+            ICimaService cimaService, IMvxIoCProvider ioCProvider) : base(navigationService, logger, ioCProvider)
         {
-            _logger = logger;
             _cimaService = cimaService;
-            _ioCProvider = ioCProvider;
 
             _openDocumentCommandAsync = new MvxAsyncCommand(OpenDocumentAsync);
         }
@@ -54,7 +51,8 @@ namespace MvvmCrossApp.Core.ViewModels
 
         async Task GetMedicineAsync(string query)
         {
-            IsLoading = true;
+            await _ioCProvider.Resolve<IMvxMainThreadAsyncDispatcher>()
+                .ExecuteOnMainThreadAsync((() => { IsLoading = true; }));
             try
             {
                 await _cimaService.GetMedicineAsync(query)
@@ -75,7 +73,8 @@ namespace MvvmCrossApp.Core.ViewModels
                         }
                         else if (response.IsFaulted)
                         {
-                            IsLoading = false;
+                            _ioCProvider.Resolve<IMvxMainThreadAsyncDispatcher>()
+                                .ExecuteOnMainThreadAsync((() => { IsLoading = false; }));
                             _logger.LogError("Fail to get medicine");
                         }
 
