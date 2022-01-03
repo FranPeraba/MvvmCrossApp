@@ -45,7 +45,7 @@ namespace MvvmCrossApp.Droid.Views
 
         void SetupView()
         {
-            _medicineTextView.Text = ViewModel.Medicine;
+            _medicineTextView.Text = ViewModel.Name;
         }
 
         void SetupBindings()
@@ -67,8 +67,8 @@ namespace MvvmCrossApp.Droid.Views
                 case nameof(ViewModel.IsLoading):
                     _progressBar.Visibility = !ViewModel.IsLoading ? ViewStates.Invisible : ViewStates.Visible;
                     break;
-                case nameof(ViewModel.Medicine):
-                    _medicineTextView.Text = ViewModel.Medicine;
+                case nameof(ViewModel.Name):
+                    _medicineTextView.Text = ViewModel.Name;
                     break;
             }
         }

@@ -20,7 +20,8 @@ namespace MvvmCrossApp.Core.ViewModels
         {
             _cimaService = cimaService;
 
-            Medicines = new List<Medicines>();
+            _medicines = new List<Medicines>();
+            
             _medicineClickCommand = new MvxCommand<Medicines>(OnMedicineClick);
         }
 
@@ -28,7 +29,7 @@ namespace MvvmCrossApp.Core.ViewModels
         public IMvxCommand<Medicines> MedicineClickCommand => _medicineClickCommand;
 
         List<Medicines> _medicines;
-        public  List<Medicines> Medicines
+        public List<Medicines> Medicines
         {
             get => _medicines;
             private set => SetProperty(ref _medicines, value);

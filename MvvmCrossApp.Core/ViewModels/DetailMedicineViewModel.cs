@@ -23,16 +23,18 @@ namespace MvvmCrossApp.Core.ViewModels
             _cimaService = cimaService;
 
             _openDocumentCommandAsync = new MvxAsyncCommand(OpenDocumentAsync);
+
+            _documents = new List<Document>();
         }
 
         IMvxAsyncCommand _openDocumentCommandAsync;
         public IMvxAsyncCommand OpenDocumentCommandAsync => _openDocumentCommandAsync;
 
-        string _medicine;
-        public string Medicine
+        string _name;
+        public string Name
         {
-            get => _medicine;
-            private set => SetProperty(ref _medicine, value);
+            get => _name;
+            private set => SetProperty(ref _name, value);
         }
 
         List<Document> _documents;
@@ -46,7 +48,7 @@ namespace MvvmCrossApp.Core.ViewModels
         {
             _nregistro = parameter.Nregistro;
             if (_nregistro != null)
-                _ = GetMedicineAsync(_nregistro);
+                GetMedicineAsync(_nregistro).ConfigureAwait(false);
         }
 
         async Task GetMedicineAsync(string query)
@@ -60,14 +62,14 @@ namespace MvvmCrossApp.Core.ViewModels
                     {
                         if (response.IsCompleted && response.Status == TaskStatus.RanToCompletion)
                         {
-                            var medicine = response.Result.Nombre;
+                            var name = response.Result.Nombre;
                             var documents = response.Result.Docs;
 
                             _ioCProvider.Resolve<IMvxMainThreadAsyncDispatcher>()
                                 .ExecuteOnMainThreadAsync((() =>
                                 {
                                     IsLoading = false;
-                                    Medicine = medicine;
+                                    Name = name;
                                     Documents = documents;
                                 }));
                         }

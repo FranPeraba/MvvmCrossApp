@@ -41,7 +41,7 @@ namespace MvvmCrossApp.iOS.Views
 		{
 			ActivityIndicator.StartAnimating();
 			
-			MedicineLabel.Text = ViewModel.Medicine;
+			MedicineLabel.Text = ViewModel.Name;
 			
 			ProspectButton.SetTitle(Strings.Prospect, UIControlState.Normal);
 			ProspectButton.Font = UIFont.SystemFontOfSize(20, UIFontWeight.Bold);
@@ -73,8 +73,8 @@ namespace MvvmCrossApp.iOS.Views
 					else
 						ActivityIndicator.StopAnimating();
 					break;
-				case nameof(ViewModel.Medicine):
-					MedicineLabel.Text = ViewModel.Medicine;
+				case nameof(ViewModel.Name):
+					MedicineLabel.Text = ViewModel.Name;
 					break;
 			}
 		}
