@@ -11,160 +11,161 @@ using MvvmCrossApp.Core.Wrappers;
 using Xamarin.Essentials;
 using Xunit;
 
-namespace MvvmCrossApp.Tests.UnitTests.ViewModels;
-
-public class DetailMedicineViewModelTests
+namespace MvvmCrossApp.Tests.UnitTests.ViewModels
 {
-    [Fact]
-    public async Task ShouldSetNameToExpectedName_OnPrepare()
+    public class DetailMedicineViewModelTests
     {
-        using (var mock = AutoMock.GetLoose())
+        [Fact]
+        public async Task ShouldSetNameToExpectedName_OnPrepare()
         {
-            #region Arrange
-            
-            mock.CanExecuteOnMainThread();
-
-            DetailMedicineViewModel detailMedicineViewModel = mock.Create<DetailMedicineViewModel>();
-
-            var expectedName = "Medicine 1";
-
-            Medicines expectedMedicine = new Medicines
+            using (var mock = AutoMock.GetLoose())
             {
-                Nombre = expectedName,
-                Nregistro = "1"
-            };
+                #region Arrange
 
-            List<Document> documents = new List<Document>();
+                mock.CanExecuteOnMainThread();
 
-            mock.Mock<ICimaService>().Setup(cs => cs.GetMedicineAsync(It.IsAny<string>()))
-                .Returns(Task.FromResult(new Medicine
+                DetailMedicineViewModel detailMedicineViewModel = mock.Create<DetailMedicineViewModel>();
+
+                var expectedName = "Medicine 1";
+
+                Medicines expectedMedicine = new Medicines
                 {
-                    Nombre = expectedMedicine.Nombre, 
-                    Nregistro = expectedMedicine.Nregistro, 
-                    Docs = documents
-                }));
+                    Nombre = expectedName,
+                    Nregistro = "1"
+                };
 
-            var tcs = new TaskCompletionSource<bool>();
-            var timeout = Task.Delay(10000);
+                List<Document> documents = new List<Document>();
 
-            detailMedicineViewModel.PropertyChanged += (o, e) =>
-            {
-                if (e.PropertyName == nameof(detailMedicineViewModel.Name))
-                    tcs.SetResult(true);
-            };
+                mock.Mock<ICimaService>().Setup(cs => cs.GetMedicineAsync(It.IsAny<string>()))
+                    .Returns(Task.FromResult(new Medicine
+                    {
+                        Nombre = expectedMedicine.Nombre,
+                        Nregistro = expectedMedicine.Nregistro,
+                        Docs = documents
+                    }));
 
-            #endregion
+                var tcs = new TaskCompletionSource<bool>();
+                var timeout = Task.Delay(10000);
 
-            #region Action
-            
-            detailMedicineViewModel.Prepare(expectedMedicine);
-            await Task.WhenAny(new List<Task> { tcs.Task, timeout });
-
-            #endregion
-
-            #region Assert
-
-            tcs.Task.IsCompleted.Should().BeTrue();
-            tcs.Task.Result.Should().BeTrue();
-            detailMedicineViewModel.Name.Should().Be(expectedName);
-
-            #endregion
-        }
-    }
-    
-    [Fact]
-    public async Task ShouldSetDocumentsToExpectedDocuments_OnPrepare()
-    {
-        using (var mock = AutoMock.GetLoose())
-        {
-            #region Arrange
-            
-            mock.CanExecuteOnMainThread();
-
-            DetailMedicineViewModel detailMedicineViewModel = mock.Create<DetailMedicineViewModel>();
-            
-            Medicines medicine = new Medicines
-            {
-                Nombre = "Medicine 1",
-                Nregistro = "1"
-            };
-
-            var expectedDocuments = new List<Document>
-            {
-                new Document { Tipo = 1, UrlHtml = "https://cima.aemps.es/cima/rest", Url = string.Empty },
-                new Document { Tipo = 1, UrlHtml = "https://cima.aemps.es/cima/rest", Url = string.Empty }
-            };
-            
-            mock.Mock<ICimaService>().Setup(cs => cs.GetMedicineAsync(It.IsAny<string>()))
-                .Returns(Task.FromResult(new Medicine
+                detailMedicineViewModel.PropertyChanged += (o, e) =>
                 {
-                    Nombre = medicine.Nombre, 
-                    Nregistro = medicine.Nregistro, 
-                    Docs = expectedDocuments
-                }));
-            
-            var tcs = new TaskCompletionSource<bool>();
-            var timeout = Task.Delay(10000);
-            
-            detailMedicineViewModel.PropertyChanged += (o, e) =>
-            {
-                if (e.PropertyName == nameof(detailMedicineViewModel.Documents))
-                    tcs.SetResult(true);
-            };
+                    if (e.PropertyName == nameof(detailMedicineViewModel.Name))
+                        tcs.SetResult(true);
+                };
 
-            #endregion
+                #endregion
 
-            #region Action
-            
-            detailMedicineViewModel.Prepare(medicine);
-            await Task.WhenAny(new List<Task> { tcs.Task, timeout });
+                #region Action
 
-            #endregion
+                detailMedicineViewModel.Prepare(expectedMedicine);
+                await Task.WhenAny(new List<Task> { tcs.Task, timeout });
 
-            #region Assert
-            
-            tcs.Task.IsCompleted.Should().BeTrue();
-            tcs.Task.Result.Should().BeTrue();
-            detailMedicineViewModel.Documents.Should().BeEquivalentTo(expectedDocuments);
+                #endregion
 
-            #endregion
+                #region Assert
+
+                tcs.Task.IsCompleted.Should().BeTrue();
+                tcs.Task.Result.Should().BeTrue();
+                detailMedicineViewModel.Name.Should().Be(expectedName);
+
+                #endregion
+            }
         }
-    }
-    
-    [Fact]
-    public async Task ShouldOpenDocumentWithExpectedDocument_WhenDocumentButtonClicked()
-    {
-        using (var mock = AutoMock.GetLoose())
+
+        [Fact]
+        public async Task ShouldSetDocumentsToExpectedDocuments_OnPrepare()
         {
-            #region Arrange
-            
-            DetailMedicineViewModel detailMedicineViewModel = mock.Create<DetailMedicineViewModel>();
-            var documents = new List<Document>
+            using (var mock = AutoMock.GetLoose())
             {
-                new Document { Tipo = 1, UrlHtml = "https://cima.aemps.es/cima/rest", Url = string.Empty },
-                new Document { Tipo = 1, UrlHtml = "https://cima.aemps.es/cima/rest", Url = string.Empty }
-            };
+                #region Arrange
 
-            var expectedDocument = documents[1].UrlHtml;
-            
-            detailMedicineViewModel.Documents.AddRange(documents);
+                mock.CanExecuteOnMainThread();
 
-            mock.Mock<IBrowserWrapper>().Setup(br => br.Browser(expectedDocument, BrowserLaunchMode.SystemPreferred))
-                .Returns(Task.CompletedTask);
+                DetailMedicineViewModel detailMedicineViewModel = mock.Create<DetailMedicineViewModel>();
 
-            #endregion
-            
-            #region Action
+                Medicines medicine = new Medicines
+                {
+                    Nombre = "Medicine 1",
+                    Nregistro = "1"
+                };
 
-            await detailMedicineViewModel.OpenDocumentAsyncCommand.ExecuteAsync();
+                var expectedDocuments = new List<Document>
+                {
+                    new Document { Tipo = 1, UrlHtml = "https://cima.aemps.es/cima/rest", Url = string.Empty },
+                    new Document { Tipo = 1, UrlHtml = "https://cima.aemps.es/cima/rest", Url = string.Empty }
+                };
 
-            #endregion
+                mock.Mock<ICimaService>().Setup(cs => cs.GetMedicineAsync(It.IsAny<string>()))
+                    .Returns(Task.FromResult(new Medicine
+                    {
+                        Nombre = medicine.Nombre,
+                        Nregistro = medicine.Nregistro,
+                        Docs = expectedDocuments
+                    }));
 
-            #region Assert
-            
-            mock.Mock<IBrowserWrapper>().Verify(br => br.Browser(expectedDocument, BrowserLaunchMode.SystemPreferred), Times.Once);
+                var tcs = new TaskCompletionSource<bool>();
+                var timeout = Task.Delay(10000);
 
-            #endregion
+                detailMedicineViewModel.PropertyChanged += (o, e) =>
+                {
+                    if (e.PropertyName == nameof(detailMedicineViewModel.Documents))
+                        tcs.SetResult(true);
+                };
+
+                #endregion
+
+                #region Action
+
+                detailMedicineViewModel.Prepare(medicine);
+                await Task.WhenAny(new List<Task> { tcs.Task, timeout });
+
+                #endregion
+
+                #region Assert
+
+                tcs.Task.IsCompleted.Should().BeTrue();
+                tcs.Task.Result.Should().BeTrue();
+                detailMedicineViewModel.Documents.Should().BeEquivalentTo(expectedDocuments);
+
+                #endregion
+            }
+        }
+
+        [Fact]
+        public async Task ShouldOpenDocumentWithExpectedDocument_WhenDocumentButtonClicked()
+        {
+            using (var mock = AutoMock.GetLoose())
+            {
+                #region Arrange
+
+                DetailMedicineViewModel detailMedicineViewModel = mock.Create<DetailMedicineViewModel>();
+                var documents = new List<Document>
+                {
+                    new Document { Tipo = 1, UrlHtml = "https://cima.aemps.es/cima/rest", Url = string.Empty },
+                    new Document { Tipo = 1, UrlHtml = "https://cima.aemps.es/cima/rest", Url = string.Empty }
+                };
+
+                var expectedDocument = documents[1].UrlHtml;
+
+                detailMedicineViewModel.Documents.AddRange(documents);
+
+                mock.Mock<IBrowserWrapper>().Setup(br => br.Browser(expectedDocument, BrowserLaunchMode.SystemPreferred))
+                    .Returns(Task.CompletedTask);
+
+                #endregion
+
+                #region Action
+
+                await detailMedicineViewModel.OpenDocumentAsyncCommand.ExecuteAsync();
+
+                #endregion
+
+                #region Assert
+
+                mock.Mock<IBrowserWrapper>().Verify(br => br.Browser(expectedDocument, BrowserLaunchMode.SystemPreferred), Times.Once);
+
+                #endregion
+            }
         }
     }
 }
