@@ -3,6 +3,7 @@ using MvvmCross;
 using MvvmCross.IoC;
 using MvvmCross.ViewModels;
 using MvvmCrossApp.Core.Services;
+using MvvmCrossApp.Core.Wrappers;
 using Refit;
 
 namespace MvvmCrossApp.Core
@@ -13,6 +14,11 @@ namespace MvvmCrossApp.Core
         {
             CreatableTypes()
                 .EndingWith("Service")
+                .AsInterfaces()
+                .RegisterAsLazySingleton();
+            
+            CreatableTypes()
+                .EndingWith("Wrapper")
                 .AsInterfaces()
                 .RegisterAsLazySingleton();
 

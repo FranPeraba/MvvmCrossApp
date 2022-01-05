@@ -8,6 +8,7 @@ using MvvmCross.IoC;
 using MvvmCross.Navigation;
 using MvvmCrossApp.Core.Models;
 using MvvmCrossApp.Core.Services;
+using MvvmCrossApp.Core.Wrappers;
 using Xamarin.Essentials;
 
 namespace MvvmCrossApp.Core.ViewModels
@@ -15,20 +16,23 @@ namespace MvvmCrossApp.Core.ViewModels
     public class DetailMedicineViewModel : BaseViewModel<Medicines>
     {
         readonly ICimaService _cimaService;
+        readonly IBrowserWrapper _browserWrapper;
         string _nregistro;
 
         public DetailMedicineViewModel(IMvxNavigationService navigationService, ILogger<DetailMedicineViewModel> logger, 
-            ICimaService cimaService, IMvxIoCProvider ioCProvider) : base(navigationService, logger, ioCProvider)
+            ICimaService cimaService, IMvxIoCProvider ioCProvider, IBrowserWrapper browserWrapper) 
+            : base(navigationService, logger, ioCProvider)
         {
             _cimaService = cimaService;
+            _browserWrapper = browserWrapper;
 
-            _openDocumentCommandAsync = new MvxAsyncCommand(OpenDocumentAsync);
+            _openDocumentAsyncCommand = new MvxAsyncCommand(OpenDocumentAsync);
 
             _documents = new List<Document>();
         }
 
-        IMvxAsyncCommand _openDocumentCommandAsync;
-        public IMvxAsyncCommand OpenDocumentCommandAsync => _openDocumentCommandAsync;
+        IMvxAsyncCommand _openDocumentAsyncCommand;
+        public IMvxAsyncCommand OpenDocumentAsyncCommand => _openDocumentAsyncCommand;
 
         string _name;
         public string Name
@@ -94,16 +98,16 @@ namespace MvvmCrossApp.Core.ViewModels
             if (Documents.Count >= 2)
             {
                 if (!string.IsNullOrEmpty(Documents[1].UrlHtml))
-                    await Browser.OpenAsync(Documents[1].UrlHtml, BrowserLaunchMode.SystemPreferred);
+                    await _browserWrapper.Browser(Documents[1].UrlHtml, BrowserLaunchMode.SystemPreferred);
                 else
-                    await Browser.OpenAsync(Documents[1].Url, BrowserLaunchMode.SystemPreferred);
+                    await _browserWrapper.Browser(Documents[1].Url, BrowserLaunchMode.SystemPreferred);
             }
             else if (Documents[0].Tipo == 2)
             {
                 if (!string.IsNullOrEmpty(Documents[0].UrlHtml))
-                    await Browser.OpenAsync(Documents[0].UrlHtml, BrowserLaunchMode.SystemPreferred);
+                    await _browserWrapper.Browser(Documents[0].UrlHtml, BrowserLaunchMode.SystemPreferred);
                 else
-                    await Browser.OpenAsync(Documents[0].Url, BrowserLaunchMode.SystemPreferred);
+                    await _browserWrapper.Browser(Documents[0].Url, BrowserLaunchMode.SystemPreferred);
             }
         }
     }
