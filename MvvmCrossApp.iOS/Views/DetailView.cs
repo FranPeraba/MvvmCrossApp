@@ -54,13 +54,13 @@ namespace MvvmCrossApp.iOS.Views
 		void SetupBindings()
 		{
 			ViewModel.PropertyChanged += ViewModel_PropertyChanged;
-			ProspectButton.TouchUpInside += ProspectButton_OnClick;
+			ProspectButton.TouchUpInside += DocumentButton_OnClick;
 		}
 
 		void ClearBindings()
 		{
 			ViewModel.PropertyChanged -= ViewModel_PropertyChanged;
-			ProspectButton.TouchUpInside -= ProspectButton_OnClick;
+			ProspectButton.TouchUpInside -= DocumentButton_OnClick;
 		}
 
 		void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -79,10 +79,10 @@ namespace MvvmCrossApp.iOS.Views
 			}
 		}
 
-		void ProspectButton_OnClick(object sender, EventArgs e)
+		void DocumentButton_OnClick(object sender, EventArgs e)
 		{
-			if (ViewModel.OpenDocumentCommandAsync.CanExecute())
-				ViewModel.OpenDocumentCommandAsync.ExecuteAsync();
+			if (ViewModel.OpenDocumentAsyncCommand.CanExecute())
+				ViewModel.OpenDocumentAsyncCommand.ExecuteAsync();
 		}
 	}
 }

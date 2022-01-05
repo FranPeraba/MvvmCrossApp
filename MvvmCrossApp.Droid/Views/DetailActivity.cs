@@ -17,7 +17,7 @@ namespace MvvmCrossApp.Droid.Views
     public class DetailActivity : MvxActivity<DetailMedicineViewModel>
     {
         TextView _medicineTextView;
-        Button _prospectButton;
+        Button _documentButton;
         ProgressBar _progressBar;
 
         protected override void OnCreate(Bundle savedInstanceState)
@@ -27,7 +27,7 @@ namespace MvvmCrossApp.Droid.Views
             SetContentView(Resource.Layout.activity_detail);
 
             _medicineTextView = FindViewById<TextView>(Resource.Id.medicine);
-            _prospectButton = FindViewById<Button>(Resource.Id.prospecto_button);
+            _documentButton = FindViewById<Button>(Resource.Id.prospecto_button);
             _progressBar = FindViewById<ProgressBar>(Resource.Id.progressBar);
             
             SetupView();
@@ -51,13 +51,13 @@ namespace MvvmCrossApp.Droid.Views
         void SetupBindings()
         {
             ViewModel.PropertyChanged += ViewModel_PropertyChanged;
-            _prospectButton.Click += ProspectButton_OnClick;
+            _documentButton.Click += DocumentButton_OnClick;
         }
 
         void ClearBindings()
         {
             ViewModel.PropertyChanged -= ViewModel_PropertyChanged;
-            _prospectButton.Click -= ProspectButton_OnClick;
+            _documentButton.Click -= DocumentButton_OnClick;
         }
 
         void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -73,10 +73,10 @@ namespace MvvmCrossApp.Droid.Views
             }
         }
 
-        void ProspectButton_OnClick(object sender, EventArgs e)
+        void DocumentButton_OnClick(object sender, EventArgs e)
         {
-            if (ViewModel.OpenDocumentCommandAsync.CanExecute())
-                ViewModel.OpenDocumentCommandAsync.ExecuteAsync();
+            if (ViewModel.OpenDocumentAsyncCommand.CanExecute())
+                ViewModel.OpenDocumentAsyncCommand.ExecuteAsync();
         }
     }
 }
