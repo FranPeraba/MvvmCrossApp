@@ -16,6 +16,51 @@ namespace MvvmCrossApp.Tests.UnitTests.ViewModels
     public class SearchMedicinesViewModelTests
     {
         [Fact]
+        public async Task ShouldSetIsLoadingToFalse_WhenSetSearchTerm_And_SetMedicines()
+        {
+            using (var mock = AutoMock.GetLoose())
+            {
+                #region Arrange
+                
+                mock.CanExecuteOnMainThread();
+                
+                SearchMedicinesViewModel searchMedicinesViewModel = mock.Create<SearchMedicinesViewModel>();
+                string query = "Medicine";
+                
+                mock.Mock<ICimaService>().Setup(cs => cs.GetMedicinesAsync(It.IsAny<string>()))
+                    .Returns(Task.FromResult(new PagedResult<Medicines>{ Resultados = new List<Medicines>() }));
+                
+                #endregion
+            
+                #region Action
+                
+                searchMedicinesViewModel.SearchTerm = query;
+                
+                if (searchMedicinesViewModel.IsLoading)
+                {
+                    var tcs = new TaskCompletionSource<bool>();
+                    var timeout = Task.Delay(10000);
+                    searchMedicinesViewModel.PropertyChanged += (o, e) =>
+                    {
+                        if (e.PropertyName == nameof(searchMedicinesViewModel.IsLoading) && !searchMedicinesViewModel.IsLoading)
+                            tcs.SetResult(true);
+                    };
+                    await Task.WhenAny(new List<Task> { tcs.Task, timeout });
+                    tcs.Task.IsCompleted.Should().BeTrue();
+                    tcs.Task.Result.Should().BeTrue();
+                }
+                
+                #endregion
+            
+                #region Assert
+
+                searchMedicinesViewModel.IsLoading.Should().BeFalse();
+
+                #endregion
+            }
+        }
+        
+        [Fact]
         public void ShouldSetMedicinesToExpectedMedicines_WhenSetSearchTerm()
         {
             using (var mock = AutoMock.GetLoose())
@@ -35,7 +80,7 @@ namespace MvvmCrossApp.Tests.UnitTests.ViewModels
                 };
 
                 mock.Mock<ICimaService>().Setup(cs => cs.GetMedicinesAsync(It.IsAny<string>()))
-                    .Returns(Task.FromResult(new PagedResult<Medicines>{Resultados = expectedMedicines}));
+                    .Returns(Task.FromResult(new PagedResult<Medicines>{ Resultados = expectedMedicines }));
 
                 #endregion
             
