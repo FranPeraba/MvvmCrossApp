@@ -71,7 +71,7 @@
       <PackageReference Include="Newtonsoft.Json">
         <Version>13.0.1</Version>
       </PackageReference>
-      <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
+      <PackageReference Include="Xamarin.Essentials" Version="1.7.1" />
       <PackageReference Include="MvvmCross">
         <Version>8.0.2</Version>
       </PackageReference>
@@ -161,6 +161,7 @@
     <ItemGroup>
       <ProjectReference Include="..\MvvmCrossApp.Core\MvvmCrossApp.Core.csproj">
         <Name>MvvmCrossApp.Core</Name>
+        <ReferenceSourceTarget></ReferenceSourceTarget>
       </ProjectReference>
     </ItemGroup>
     <ItemGroup> 
