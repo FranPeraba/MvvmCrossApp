@@ -51,7 +51,7 @@ namespace MvvmCrossApp.Core.ViewModels
         public override void Prepare(Medicines parameter)
         {
             _nregistro = parameter.Nregistro;
-            if (_nregistro != null)
+            if (!string.IsNullOrEmpty(_nregistro))
                 GetMedicineAsync(_nregistro).ConfigureAwait(false);
         }
 
@@ -89,7 +89,7 @@ namespace MvvmCrossApp.Core.ViewModels
             }
             catch (Exception e)
             {
-                _logger.LogError("Fail to get medicine", e.Message);
+                _logger.LogError("Fail to get medicine");
             }
         }
 

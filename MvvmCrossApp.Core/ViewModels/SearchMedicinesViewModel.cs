@@ -87,7 +87,7 @@ namespace MvvmCrossApp.Core.ViewModels
             }
             catch (Exception e)
             {
-                _logger.LogError("Fail to get medicines", e.Message);
+                _logger.LogError("Fail to get medicines");
             }
         }
 
