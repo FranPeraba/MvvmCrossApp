@@ -58,7 +58,7 @@ namespace MvvmCrossApp.Core.ViewModels
         async Task GetMedicineAsync(string query)
         {
             await _ioCProvider.Resolve<IMvxMainThreadAsyncDispatcher>()
-                .ExecuteOnMainThreadAsync((() => { IsLoading = true; }));
+                .ExecuteOnMainThreadAsync(() => { IsLoading = true; });
             try
             {
                 await _cimaService.GetMedicineAsync(query)
@@ -70,17 +70,17 @@ namespace MvvmCrossApp.Core.ViewModels
                             var documents = response.Result.Docs;
 
                             _ioCProvider.Resolve<IMvxMainThreadAsyncDispatcher>()
-                                .ExecuteOnMainThreadAsync((() =>
+                                .ExecuteOnMainThreadAsync(() =>
                                 {
                                     IsLoading = false;
                                     Name = name;
                                     Documents = documents;
-                                }));
+                                });
                         }
                         else if (response.IsFaulted)
                         {
                             _ioCProvider.Resolve<IMvxMainThreadAsyncDispatcher>()
-                                .ExecuteOnMainThreadAsync((() => { IsLoading = false; }));
+                                .ExecuteOnMainThreadAsync(() => { IsLoading = false; });
                             _logger.LogError("Fail to get medicine");
                         }
 

@@ -16,7 +16,7 @@ namespace MvvmCrossApp.Tests.UnitTests.ViewModels
     public class SearchMedicinesViewModelTests
     {
         [Fact]
-        public async Task ShouldSetIsLoadingToFalse_WhenSetSearchTerm_And_SetMedicines()
+        public void ShouldSetIsLoadingToFalse_WhenSetSearchTerm_And_SetMedicines()
         {
             using (var mock = AutoMock.GetLoose())
             {
@@ -35,25 +35,11 @@ namespace MvvmCrossApp.Tests.UnitTests.ViewModels
                 #region Action
                 
                 searchMedicinesViewModel.SearchTerm = query;
-                
-                if (searchMedicinesViewModel.IsLoading)
-                {
-                    var tcs = new TaskCompletionSource<bool>();
-                    var timeout = Task.Delay(10000);
-                    searchMedicinesViewModel.PropertyChanged += (o, e) =>
-                    {
-                        if (e.PropertyName == nameof(searchMedicinesViewModel.IsLoading) && !searchMedicinesViewModel.IsLoading)
-                            tcs.SetResult(true);
-                    };
-                    await Task.WhenAny(new List<Task> { tcs.Task, timeout });
-                    tcs.Task.IsCompleted.Should().BeTrue();
-                    tcs.Task.Result.Should().BeTrue();
-                }
-                
-                #endregion
-            
-                #region Assert
 
+                #endregion
+
+                #region Assert
+                
                 searchMedicinesViewModel.IsLoading.Should().BeFalse();
 
                 #endregion

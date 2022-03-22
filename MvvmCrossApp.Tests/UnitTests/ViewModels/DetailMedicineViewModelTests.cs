@@ -47,7 +47,7 @@ namespace MvvmCrossApp.Tests.UnitTests.ViewModels
 
                 detailMedicineViewModel.PropertyChanged += (o, e) =>
                 {
-                    if (e.PropertyName == nameof(detailMedicineViewModel.IsLoading) && !detailMedicineViewModel.IsLoading)
+                    if (e.PropertyName == nameof(DetailMedicineViewModel.IsLoading) && !detailMedicineViewModel.IsLoading)
                         tcs.SetResult(true);
                 };
                 
@@ -104,7 +104,7 @@ namespace MvvmCrossApp.Tests.UnitTests.ViewModels
 
                 detailMedicineViewModel.PropertyChanged += (o, e) =>
                 {
-                    if (e.PropertyName == nameof(detailMedicineViewModel.Name))
+                    if (e.PropertyName == nameof(DetailMedicineViewModel.Name))
                         tcs.SetResult(true);
                 };
 

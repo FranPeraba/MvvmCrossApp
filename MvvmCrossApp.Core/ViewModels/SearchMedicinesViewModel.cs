@@ -58,7 +58,7 @@ namespace MvvmCrossApp.Core.ViewModels
         async Task SearchMedicinesAsync(string query)
         {
             await _ioCProvider.Resolve<IMvxMainThreadAsyncDispatcher>()
-                .ExecuteOnMainThreadAsync((() => { IsLoading = true; }));
+                .ExecuteOnMainThreadAsync(() => { IsLoading = true; });
             
             try
             {
@@ -68,18 +68,18 @@ namespace MvvmCrossApp.Core.ViewModels
                         if (response.IsCompleted && response.Status == TaskStatus.RanToCompletion)
                         {
                             _ioCProvider.Resolve<IMvxMainThreadAsyncDispatcher>()
-                                .ExecuteOnMainThreadAsync((() =>
+                                .ExecuteOnMainThreadAsync(() =>
                                 {
                                     IsLoading = false;
                                     Medicines.Clear();
                                     Medicines.AddRange(response.Result.Resultados);
                                     RaisePropertyChanged(() => Medicines);
-                                }));
+                                });
                         }
                         else if (response.IsFaulted)
                         {
                             _ioCProvider.Resolve<IMvxMainThreadAsyncDispatcher>()
-                                .ExecuteOnMainThreadAsync((() => { IsLoading = false; }));
+                                .ExecuteOnMainThreadAsync(() => { IsLoading = false; });
                             _logger.LogError("Fail to get medicines");
                         }
                     }, TaskScheduler.FromCurrentSynchronizationContext()).ConfigureAwait(false);
