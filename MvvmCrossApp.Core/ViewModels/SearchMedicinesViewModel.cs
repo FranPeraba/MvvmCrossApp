@@ -45,13 +45,13 @@ namespace MvvmCrossApp.Core.ViewModels
                 if (string.IsNullOrEmpty(value))
                 {
                     Medicines.Clear();
-                    RaisePropertyChanged(() => Medicines);
                 }
                 else if (value.Length >= 3)
                 {
                     SearchMedicinesAsync(value).ConfigureAwait(false);
                 }
                 RaisePropertyChanged(() => SearchTerm);
+                RaisePropertyChanged(() => Medicines);
             }
         }
 
@@ -59,36 +59,26 @@ namespace MvvmCrossApp.Core.ViewModels
         {
             await _ioCProvider.Resolve<IMvxMainThreadAsyncDispatcher>()
                 .ExecuteOnMainThreadAsync(() => { IsLoading = true; });
-            
-            try
-            {
-                await _cimaService.GetMedicinesAsync(query)
-                    .ContinueWith(response =>
+            await _cimaService.GetMedicinesAsync(query)
+                .ContinueWith(response =>
+                {
+                    if (response.IsCompleted && response.Status == TaskStatus.RanToCompletion)
                     {
-                        if (response.IsCompleted && response.Status == TaskStatus.RanToCompletion)
-                        {
-                            _ioCProvider.Resolve<IMvxMainThreadAsyncDispatcher>()
-                                .ExecuteOnMainThreadAsync(() =>
-                                {
-                                    IsLoading = false;
-                                    Medicines.Clear();
-                                    Medicines.AddRange(response.Result.Resultados);
-                                    RaisePropertyChanged(() => Medicines);
-                                });
-                        }
-                        else if (response.IsFaulted)
-                        {
-                            _ioCProvider.Resolve<IMvxMainThreadAsyncDispatcher>()
-                                .ExecuteOnMainThreadAsync(() => { IsLoading = false; });
-                            _logger.LogError("Fail to get medicines");
-                        }
-                    }, TaskScheduler.FromCurrentSynchronizationContext()).ConfigureAwait(false);
-
-            }
-            catch (Exception e)
-            {
-                _logger.LogError("Fail to get medicines");
-            }
+                        _ioCProvider.Resolve<IMvxMainThreadAsyncDispatcher>()
+                            .ExecuteOnMainThreadAsync(() =>
+                            {
+                                IsLoading = false;
+                                Medicines.Clear();
+                                Medicines.AddRange(response.Result.Resultados);
+                            });
+                    }
+                    else if (response.IsFaulted)
+                    {
+                        _ioCProvider.Resolve<IMvxMainThreadAsyncDispatcher>()
+                            .ExecuteOnMainThreadAsync(() => { IsLoading = false; });
+                        _logger.LogError("Fail to get medicines");
+                    }
+                }, TaskScheduler.FromCurrentSynchronizationContext()).ConfigureAwait(false);
         }
 
         void OnMedicineClick(Medicines medicine)

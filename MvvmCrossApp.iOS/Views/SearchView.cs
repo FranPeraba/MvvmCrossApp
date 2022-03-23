@@ -53,8 +53,7 @@ namespace MvvmCrossApp.iOS.Views
 
         public void UpdateSearchResultsForSearchController(UISearchController searchController)
         {
-	        var query = searchController.SearchBar.Text;
-	        ViewModel.SearchTerm = query;
+	        ViewModel.SearchTerm = searchController.SearchBar.Text;
 	        UpdateSearchResults();
         }
 

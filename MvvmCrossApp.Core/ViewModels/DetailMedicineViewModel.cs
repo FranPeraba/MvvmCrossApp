@@ -59,38 +59,30 @@ namespace MvvmCrossApp.Core.ViewModels
         {
             await _ioCProvider.Resolve<IMvxMainThreadAsyncDispatcher>()
                 .ExecuteOnMainThreadAsync(() => { IsLoading = true; });
-            try
-            {
-                await _cimaService.GetMedicineAsync(query)
-                    .ContinueWith(response =>
+            await _cimaService.GetMedicineAsync(query)
+                .ContinueWith(response =>
+                {
+                    if (response.IsCompleted && response.Status == TaskStatus.RanToCompletion)
                     {
-                        if (response.IsCompleted && response.Status == TaskStatus.RanToCompletion)
-                        {
-                            var name = response.Result.Nombre;
-                            var documents = response.Result.Docs;
+                        var name = response.Result.Nombre;
+                        var documents = response.Result.Docs;
 
-                            _ioCProvider.Resolve<IMvxMainThreadAsyncDispatcher>()
-                                .ExecuteOnMainThreadAsync(() =>
-                                {
-                                    IsLoading = false;
-                                    Name = name;
-                                    Documents = documents;
-                                });
-                        }
-                        else if (response.IsFaulted)
-                        {
-                            _ioCProvider.Resolve<IMvxMainThreadAsyncDispatcher>()
-                                .ExecuteOnMainThreadAsync(() => { IsLoading = false; });
-                            _logger.LogError("Fail to get medicine");
-                        }
+                        _ioCProvider.Resolve<IMvxMainThreadAsyncDispatcher>()
+                            .ExecuteOnMainThreadAsync(() =>
+                            {
+                                IsLoading = false;
+                                Name = name;
+                                Documents = documents;
+                            });
+                    }
+                    else if (response.IsFaulted)
+                    {
+                        _ioCProvider.Resolve<IMvxMainThreadAsyncDispatcher>()
+                            .ExecuteOnMainThreadAsync(() => { IsLoading = false; });
+                        _logger.LogError("Fail to get medicine");
+                    }
 
-                    }, TaskScheduler.FromCurrentSynchronizationContext()).ConfigureAwait(false);
-
-            }
-            catch (Exception e)
-            {
-                _logger.LogError("Fail to get medicine");
-            }
+                }, TaskScheduler.FromCurrentSynchronizationContext()).ConfigureAwait(false);
         }
 
         async Task OpenDocumentAsync()
