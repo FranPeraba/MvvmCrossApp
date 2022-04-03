@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using Foundation;
 using MvvmCross.Platforms.Ios.Views;
 using MvvmCrossApp.Core.Models;
@@ -16,12 +15,36 @@ namespace MvvmCrossApp.iOS.Views
 	public partial class SearchView : MvxTableViewController<SearchMedicinesViewModel>, IUISearchResultsUpdating, IUISearchBarDelegate,
 		IUITabBarControllerDelegate, IUISearchControllerDelegate
 	{
-		List<Medicines> _medicines;
 		UISearchController _searchController;
 		UIActivityIndicatorView _activityIndicator;
 		
 		public SearchView (IntPtr handle) : base (handle)
 		{
+		}
+		
+		bool _isLoading;
+		public bool IsLoading
+		{
+			get => _isLoading;
+			set
+			{
+				_isLoading = value;
+				if (!value)
+					_activityIndicator.StopAnimating();
+				else
+					_activityIndicator.StartAnimating();
+			}
+		}
+
+		List<Medicines> _medicines;
+		public List<Medicines> Medicines
+		{
+			get => _medicines;
+			set
+			{
+				_medicines = value;
+				UpdateSearchResults();
+			}
 		}
 
         public override void ViewDidLoad()
@@ -39,18 +62,6 @@ namespace MvvmCrossApp.iOS.Views
             Title = Strings.SearchMedicine;
         }
 
-        public override void ViewDidAppear(bool animated)
-        {
-	        base.ViewDidAppear(animated);
-	        SetupBindings();
-        }
-
-        public override void ViewDidDisappear(bool animated)
-        {
-	        base.ViewDidDisappear(animated);
-	        ClearBindings();
-        }
-
         public void UpdateSearchResultsForSearchController(UISearchController searchController)
         {
 	        ViewModel.SearchTerm = searchController.SearchBar.Text;
@@ -59,28 +70,10 @@ namespace MvvmCrossApp.iOS.Views
 
         void SetupBindings()
         {
-	        ViewModel.PropertyChanged += ViewModel_PropertyChanged;
-        }
-
-        void ClearBindings()
-        {
-	        ViewModel.PropertyChanged -= ViewModel_PropertyChanged;
-        }
-
-        void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-	        switch (e.PropertyName)
-	        {
-		        case nameof(ViewModel.IsLoading):
-			        if (ViewModel.IsLoading)
-				        _activityIndicator.StartAnimating();
-			        else
-				        _activityIndicator.StopAnimating();
-			        break;
-		        case nameof(ViewModel.Medicines):
-			        UpdateSearchResults();
-			        break;
-	        }
+	        var set = CreateBindingSet();
+	        set.Bind(this).For(v => v.IsLoading).To(vm => vm.IsLoading);
+	        set.Bind(this).For(v => v.Medicines).To(vm => vm.Medicines);
+	        set.Apply();
         }
 
         void UpdateSearchResults()
