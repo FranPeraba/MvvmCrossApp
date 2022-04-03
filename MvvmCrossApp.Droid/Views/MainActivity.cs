@@ -1,8 +1,5 @@
-﻿using System.ComponentModel;
-using Android.App;
+﻿using Android.App;
 using Android.OS;
-using Android.Views;
-using Android.Widget;
 using AndroidX.RecyclerView.Widget;
 using MvvmCross.DroidX.RecyclerView;
 using MvvmCross.Platforms.Android.Binding.BindingContext;
@@ -10,7 +7,6 @@ using MvvmCross.Platforms.Android.Presenters.Attributes;
 using MvvmCross.Platforms.Android.Views;
 using MvvmCrossApp.Core.Resources;
 using MvvmCrossApp.Core.ViewModels;
-using MvvmCross.Binding.BindingContext;
 using SearchView = AndroidX.AppCompat.Widget.SearchView;
 
 namespace MvvmCrossApp.Droid.Views
@@ -22,7 +18,6 @@ namespace MvvmCrossApp.Droid.Views
         MvxRecyclerView _recyclerView;
         MedicinesAdapter _adapter;
         SearchView _searchView;
-        ProgressBar _progressBar;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -30,28 +25,11 @@ namespace MvvmCrossApp.Droid.Views
             
             SetContentView(Resource.Layout.activity_main);
 
-            _progressBar = FindViewById<ProgressBar>(Resource.Id.progress_bar);
-            _progressBar.Visibility = ViewStates.Gone;
-
             SetupSearchView();
 
             SetupRecyclerView();
 
-            SetupBindings();
-
             Title = Strings.SearchMedicine;
-        }
-
-        protected override void OnPause()
-        {
-            base.OnPause();
-            ClearBindings();
-        }
-
-        protected override void OnResume()
-        {
-            base.OnResume();
-            SetupBindings();
         }
 
         void SetupSearchView()
@@ -74,30 +52,6 @@ namespace MvvmCrossApp.Droid.Views
             var layoutManager = new LinearLayoutManager(this);
             _recyclerView.SetLayoutManager(layoutManager);
             _recyclerView.Adapter = _adapter;
-        }
-
-        void SetupBindings()
-        {
-            var bindingSet = this.CreateBindingSet<MainActivity, SearchMedicinesViewModel>();
-            bindingSet.Bind(_adapter).For(v => v.ItemsSource).To(vm => vm.Medicines);
-            bindingSet.Apply();
-            
-            ViewModel.PropertyChanged += ViewModel_PropertyChanged;
-        }
-
-        void ClearBindings()
-        {
-            ViewModel.PropertyChanged -= ViewModel_PropertyChanged;
-        }
-
-        void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            switch (e.PropertyName)
-            {
-                case nameof(ViewModel.IsLoading):
-                    _progressBar.Visibility = !ViewModel.IsLoading ? ViewStates.Gone : ViewStates.Visible;
-                    break;
-            }
         }
 
         public bool OnQueryTextChange(string newText)
