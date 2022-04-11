@@ -51,8 +51,20 @@ namespace MvvmCrossApp.Core.ViewModels
         public override void Prepare(Medicines parameter)
         {
             _nregistro = parameter.Nregistro;
-            if (!string.IsNullOrEmpty(_nregistro))
-                GetMedicineAsync(_nregistro).ConfigureAwait(false);
+        }
+
+        public override async Task Initialize()
+        {
+            await base.Initialize();
+            try
+            {
+                if (!string.IsNullOrEmpty(_nregistro))
+                    await GetMedicineAsync(_nregistro);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Fail to get medicine", e.Message);
+            }
         }
 
         async Task GetMedicineAsync(string query)
