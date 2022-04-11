@@ -16,7 +16,7 @@ namespace MvvmCrossApp.Tests.UnitTests.ViewModels
     public class DetailMedicineViewModelTests
     {
         [Fact]
-        public async Task ShouldSetIsLoadingToFalse_WhenSetMedicine_OnPrepare()
+        public async Task ShouldSetIsLoadingToFalse_WhenGetMedicine_OnInitialize()
         {
             using (var mock = AutoMock.GetLoose())
             {
@@ -56,6 +56,7 @@ namespace MvvmCrossApp.Tests.UnitTests.ViewModels
                 #region Action
                 
                 detailMedicineViewModel.Prepare(medicine);
+                await detailMedicineViewModel.Initialize();
                 await Task.WhenAny(new List<Task> { tcs.Task, timeout });
                 
                 #endregion
@@ -71,7 +72,7 @@ namespace MvvmCrossApp.Tests.UnitTests.ViewModels
         }
         
         [Fact]
-        public async Task ShouldSetNameToExpectedName_OnPrepare()
+        public async Task ShouldSetNameToExpectedName_OnInitialize()
         {
             using (var mock = AutoMock.GetLoose())
             {
@@ -113,6 +114,7 @@ namespace MvvmCrossApp.Tests.UnitTests.ViewModels
                 #region Action
 
                 detailMedicineViewModel.Prepare(expectedMedicine);
+                await detailMedicineViewModel.Initialize();
                 await Task.WhenAny(new List<Task> { tcs.Task, timeout });
 
                 #endregion
@@ -128,7 +130,7 @@ namespace MvvmCrossApp.Tests.UnitTests.ViewModels
         }
 
         [Fact]
-        public async Task ShouldSetDocumentsToExpectedDocuments_OnPrepare()
+        public async Task ShouldSetDocumentsToExpectedDocuments_OnInitialize()
         {
             using (var mock = AutoMock.GetLoose())
             {
@@ -172,6 +174,7 @@ namespace MvvmCrossApp.Tests.UnitTests.ViewModels
                 #region Action
 
                 detailMedicineViewModel.Prepare(medicine);
+                await detailMedicineViewModel.Initialize();
                 await Task.WhenAny(new List<Task> { tcs.Task, timeout });
 
                 #endregion
