@@ -56,6 +56,7 @@ namespace MvvmCrossApp.iOS.Views
 			set.Bind(MedicineLabel).To(vm => vm.Name);
 			set.Bind(ProspectButton).To(vm => vm.OpenDocumentAsyncCommand);
 			set.Bind(this).For(v => v.IsLoading).To(vm => vm.IsLoading);
+			set.Bind(ProspectButton).For("InvertedVisibility").To(vm => vm.IsLoading);
 			set.Apply();
 		}
 	}

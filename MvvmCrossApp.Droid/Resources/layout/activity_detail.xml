@@ -41,6 +41,6 @@
         android:textSize="18dp"
         android:textStyle="bold"
         android:background="@color/colorAccent"
-        app:MvxBind="Click OpenDocumentAsyncCommand"/>
+        app:MvxBind="InvertedVisibility InvertedVisibility(IsLoading); Click OpenDocumentAsyncCommand" />
     
 </LinearLayout>
