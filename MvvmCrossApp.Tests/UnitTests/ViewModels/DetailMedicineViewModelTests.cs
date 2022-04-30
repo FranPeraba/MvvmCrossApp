@@ -149,7 +149,7 @@ namespace MvvmCrossApp.Tests.UnitTests.ViewModels
                 var expectedDocuments = new List<Document>
                 {
                     new Document { Tipo = 1, UrlHtml = "https://cima.aemps.es/cima/rest", Url = string.Empty },
-                    new Document { Tipo = 1, UrlHtml = "https://cima.aemps.es/cima/rest", Url = string.Empty }
+                    new Document { Tipo = 2, UrlHtml = string.Empty, Url = "https://cima.aemps.es/cima/rest" }
                 };
 
                 mock.Mock<ICimaService>().Setup(cs => cs.GetMedicineAsync(It.IsAny<string>()))
@@ -160,29 +160,17 @@ namespace MvvmCrossApp.Tests.UnitTests.ViewModels
                         Docs = expectedDocuments
                     }));
 
-                var tcs = new TaskCompletionSource<bool>();
-                var timeout = Task.Delay(10000);
-
-                detailMedicineViewModel.PropertyChanged += (o, e) =>
-                {
-                    if (e.PropertyName == nameof(detailMedicineViewModel.Documents))
-                        tcs.SetResult(true);
-                };
-
                 #endregion
 
                 #region Action
 
                 detailMedicineViewModel.Prepare(medicine);
                 await detailMedicineViewModel.Initialize();
-                await Task.WhenAny(new List<Task> { tcs.Task, timeout });
 
                 #endregion
 
                 #region Assert
-
-                tcs.Task.IsCompleted.Should().BeTrue();
-                tcs.Task.Result.Should().BeTrue();
+                
                 detailMedicineViewModel.Documents.Should().BeEquivalentTo(expectedDocuments);
 
                 #endregion
@@ -200,7 +188,7 @@ namespace MvvmCrossApp.Tests.UnitTests.ViewModels
                 var documents = new List<Document>
                 {
                     new Document { Tipo = 1, UrlHtml = "https://cima.aemps.es/cima/rest", Url = string.Empty },
-                    new Document { Tipo = 1, UrlHtml = "https://cima.aemps.es/cima/rest", Url = string.Empty }
+                    new Document { Tipo = 2, UrlHtml = "https://cima.aemps.es/cima/rest", Url = string.Empty }
                 };
 
                 var expectedDocument = documents[1].UrlHtml;

@@ -28,7 +28,7 @@ namespace MvvmCrossApp.Core.ViewModels
 
             _openDocumentAsyncCommand = new MvxAsyncCommand(OpenDocumentAsync);
 
-            _documents = new List<Document>();
+            Documents = new List<Document>();
         }
 
         IMvxAsyncCommand _openDocumentAsyncCommand;
@@ -40,13 +40,8 @@ namespace MvvmCrossApp.Core.ViewModels
             get => _name;
             private set => SetProperty(ref _name, value);
         }
-
-        List<Document> _documents;
-        public List<Document> Documents
-        {
-            get => _documents;
-            private set => SetProperty(ref _documents, value);
-        }
+        
+        public List<Document> Documents { get; private set; }
 
         public override void Prepare(Medicines parameter)
         {
@@ -77,15 +72,13 @@ namespace MvvmCrossApp.Core.ViewModels
                     if (response.IsCompleted && response.Status == TaskStatus.RanToCompletion)
                     {
                         var name = response.Result.Nombre;
-                        var documents = response.Result.Docs;
-
                         _ioCProvider.Resolve<IMvxMainThreadAsyncDispatcher>()
                             .ExecuteOnMainThreadAsync(() =>
                             {
                                 IsLoading = false;
                                 Name = name;
-                                Documents = documents;
                             });
+                        Documents = response.Result.Docs;
                     }
                     else if (response.IsFaulted)
                     {
