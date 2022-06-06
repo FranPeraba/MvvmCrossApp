@@ -21,8 +21,6 @@ namespace MvvmCrossApp.Tests.UnitTests.ViewModels
             using (var mock = AutoMock.GetLoose())
             {
                 #region Arrange
-                
-                mock.CanExecuteOnMainThread();
 
                 DetailMedicineViewModel detailMedicineViewModel = mock.Create<DetailMedicineViewModel>();
                 
@@ -78,8 +76,6 @@ namespace MvvmCrossApp.Tests.UnitTests.ViewModels
             {
                 #region Arrange
 
-                mock.CanExecuteOnMainThread();
-
                 DetailMedicineViewModel detailMedicineViewModel = mock.Create<DetailMedicineViewModel>();
 
                 var expectedName = "Medicine 1";
@@ -100,29 +96,17 @@ namespace MvvmCrossApp.Tests.UnitTests.ViewModels
                         Docs = documents
                     }));
 
-                var tcs = new TaskCompletionSource<bool>();
-                var timeout = Task.Delay(10000);
-
-                detailMedicineViewModel.PropertyChanged += (o, e) =>
-                {
-                    if (e.PropertyName == nameof(DetailMedicineViewModel.Name))
-                        tcs.SetResult(true);
-                };
-
                 #endregion
 
                 #region Action
 
                 detailMedicineViewModel.Prepare(expectedMedicine);
                 await detailMedicineViewModel.Initialize();
-                await Task.WhenAny(new List<Task> { tcs.Task, timeout });
 
                 #endregion
 
                 #region Assert
 
-                tcs.Task.IsCompleted.Should().BeTrue();
-                tcs.Task.Result.Should().BeTrue();
                 detailMedicineViewModel.Name.Should().Be(expectedName);
 
                 #endregion
@@ -135,8 +119,6 @@ namespace MvvmCrossApp.Tests.UnitTests.ViewModels
             using (var mock = AutoMock.GetLoose())
             {
                 #region Arrange
-
-                mock.CanExecuteOnMainThread();
 
                 DetailMedicineViewModel detailMedicineViewModel = mock.Create<DetailMedicineViewModel>();
 

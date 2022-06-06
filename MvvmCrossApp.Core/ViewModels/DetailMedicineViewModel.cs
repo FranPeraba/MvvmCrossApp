@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using MvvmCross.Base;
 using MvvmCross.Commands;
 using MvvmCross.IoC;
 using MvvmCross.Navigation;
@@ -38,9 +37,13 @@ namespace MvvmCrossApp.Core.ViewModels
         public string Name
         {
             get => _name;
-            private set => SetProperty(ref _name, value);
+            private set
+            {
+                _name = value;
+                RaisePropertyChanged(() => Name);
+            }
         }
-        
+
         public List<Document> Documents { get; private set; }
 
         public override void Prepare(Medicines parameter)
@@ -64,26 +67,19 @@ namespace MvvmCrossApp.Core.ViewModels
 
         async Task GetMedicineAsync(string query)
         {
-            await _ioCProvider.Resolve<IMvxMainThreadAsyncDispatcher>()
-                .ExecuteOnMainThreadAsync(() => { IsLoading = true; });
+            IsLoading = true;
             await _cimaService.GetMedicineAsync(query)
                 .ContinueWith(response =>
                 {
                     if (response.IsCompleted && response.Status == TaskStatus.RanToCompletion)
                     {
-                        var name = response.Result.Nombre;
-                        _ioCProvider.Resolve<IMvxMainThreadAsyncDispatcher>()
-                            .ExecuteOnMainThreadAsync(() =>
-                            {
-                                IsLoading = false;
-                                Name = name;
-                            });
+                        IsLoading = false;
+                        Name = response.Result.Nombre;
                         Documents = response.Result.Docs;
                     }
                     else if (response.IsFaulted)
                     {
-                        _ioCProvider.Resolve<IMvxMainThreadAsyncDispatcher>()
-                            .ExecuteOnMainThreadAsync(() => { IsLoading = false; });
+                        IsLoading = false;
                         _logger.LogError("Fail to get medicine");
                     }
 

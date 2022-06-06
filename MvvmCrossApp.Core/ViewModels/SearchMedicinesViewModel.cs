@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using MvvmCross.Base;
 using MvvmCross.Commands;
 using MvvmCross.IoC;
 using MvvmCross.Navigation;
@@ -61,23 +59,19 @@ namespace MvvmCrossApp.Core.ViewModels
 
         async Task SearchMedicinesAsync(string query)
         {
-            await _ioCProvider.Resolve<IMvxMainThreadAsyncDispatcher>()
-                .ExecuteOnMainThreadAsync(() => { IsLoading = true; });
+            IsLoading = true;
             await _cimaService.GetMedicinesAsync(query)
                 .ContinueWith(response =>
                 {
                     if (response.IsCompleted && response.Status == TaskStatus.RanToCompletion)
                     {
-                        _ioCProvider.Resolve<IMvxMainThreadAsyncDispatcher>()
-                            .ExecuteOnMainThreadAsync(() => { IsLoading = false; });
-
+                        IsLoading = false;
                         Medicines.Clear();
                         Medicines.AddRange(response.Result.Resultados);
                     }
                     else if (response.IsFaulted)
                     {
-                        _ioCProvider.Resolve<IMvxMainThreadAsyncDispatcher>()
-                            .ExecuteOnMainThreadAsync(() => { IsLoading = false; });
+                        IsLoading = false;
                         _logger.LogError("Fail to get medicines");
                     }
                 }, TaskScheduler.FromCurrentSynchronizationContext()).ConfigureAwait(false);

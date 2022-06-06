@@ -2,7 +2,6 @@ using Microsoft.Extensions.Logging;
 using MvvmCross.IoC;
 using MvvmCross.Navigation;
 using MvvmCross.ViewModels;
-using MvvmCrossApp.Core.Services;
 
 namespace MvvmCrossApp.Core.ViewModels
 {
@@ -23,7 +22,11 @@ namespace MvvmCrossApp.Core.ViewModels
         public bool IsLoading
         {
             get => _isLoading;
-            protected set => SetProperty(ref _isLoading, value);
+            protected set
+            {
+                _isLoading = value;
+                RaisePropertyChanged(() => IsLoading);
+            }
         }
     }
 }

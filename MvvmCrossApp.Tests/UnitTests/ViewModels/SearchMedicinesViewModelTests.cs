@@ -22,8 +22,6 @@ namespace MvvmCrossApp.Tests.UnitTests.ViewModels
             {
                 #region Arrange
                 
-                mock.CanExecuteOnMainThread();
-                
                 SearchMedicinesViewModel searchMedicinesViewModel = mock.Create<SearchMedicinesViewModel>();
                 string query = "Medicine";
                 
@@ -35,7 +33,7 @@ namespace MvvmCrossApp.Tests.UnitTests.ViewModels
                 
                 searchMedicinesViewModel.PropertyChanged += (o, e) =>
                 {
-                    if (e.PropertyName == nameof(SearchMedicinesViewModel.Medicines))
+                    if (e.PropertyName == nameof(SearchMedicinesViewModel.IsLoading) && !searchMedicinesViewModel.IsLoading)
                         tcs.SetResult(true);
                 };
                 
@@ -63,8 +61,6 @@ namespace MvvmCrossApp.Tests.UnitTests.ViewModels
             using (var mock = AutoMock.GetLoose())
             {
                 #region Arrange
-                
-                mock.CanExecuteOnMainThread();
                 
                 SearchMedicinesViewModel searchMedicinesViewModel = mock.Create<SearchMedicinesViewModel>();
 
