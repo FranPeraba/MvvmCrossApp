@@ -20,7 +20,7 @@ namespace MvvmCrossApp.Core.ViewModels
         {
             _cimaService = cimaService;
 
-            _medicines = new List<Medicines>();
+            Medicines = new List<Medicines>();
             
             _medicineClickCommand = new MvxCommand<Medicines>(OnMedicineClick);
         }
@@ -32,7 +32,11 @@ namespace MvvmCrossApp.Core.ViewModels
         public List<Medicines> Medicines
         {
             get => _medicines;
-            private set => SetProperty(ref _medicines, value);
+            private set
+            {
+                _medicines = value;
+                RaisePropertyChanged(() => Medicines);
+            }
         }
 
         string _searchTerm;
@@ -65,12 +69,10 @@ namespace MvvmCrossApp.Core.ViewModels
                     if (response.IsCompleted && response.Status == TaskStatus.RanToCompletion)
                     {
                         _ioCProvider.Resolve<IMvxMainThreadAsyncDispatcher>()
-                            .ExecuteOnMainThreadAsync(() =>
-                            {
-                                IsLoading = false;
-                                Medicines.Clear();
-                                Medicines.AddRange(response.Result.Resultados);
-                            });
+                            .ExecuteOnMainThreadAsync(() => { IsLoading = false; });
+
+                        Medicines.Clear();
+                        Medicines.AddRange(response.Result.Resultados);
                     }
                     else if (response.IsFaulted)
                     {
