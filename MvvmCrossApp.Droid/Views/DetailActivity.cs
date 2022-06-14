@@ -9,7 +9,7 @@ using MvvmCrossApp.Core.ViewModels;
 namespace MvvmCrossApp.Droid.Views
 {
     [MvxActivityPresentation]
-    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", LaunchMode = LaunchMode.SingleTop)]
+    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", LaunchMode = LaunchMode.SingleTop, ParentActivity = typeof(MainActivity))]
     public class DetailActivity : MvxActivity<DetailMedicineViewModel>
     {
         protected override void OnCreate(Bundle savedInstanceState)
@@ -19,6 +19,8 @@ namespace MvvmCrossApp.Droid.Views
             SetContentView(Resource.Layout.activity_detail);
 
             Title = Strings.Medicine;
+
+            SupportActionBar.SetDisplayHomeAsUpEnabled(true);
         }
     }
 }
