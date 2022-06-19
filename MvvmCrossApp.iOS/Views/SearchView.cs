@@ -43,7 +43,7 @@ namespace MvvmCrossApp.iOS.Views
 			set
 			{
 				_medicines = value;
-				UpdateSearchResults();
+				TableView.ReloadData();
 			}
 		}
 
@@ -65,7 +65,6 @@ namespace MvvmCrossApp.iOS.Views
         public void UpdateSearchResultsForSearchController(UISearchController searchController)
         {
 	        ViewModel.SearchTerm = searchController.SearchBar.Text;
-	        UpdateSearchResults();
         }
 
         void SetupBindings()
@@ -74,12 +73,6 @@ namespace MvvmCrossApp.iOS.Views
 	        set.Bind(this).For(v => v.IsLoading).To(vm => vm.IsLoading);
 	        set.Bind(this).For(v => v.Medicines).To(vm => vm.Medicines);
 	        set.Apply();
-        }
-
-        void UpdateSearchResults()
-        {
-	        _medicines = ViewModel.Medicines;
-	        TableView.ReloadData();
         }
 
         void SetupSearchController()
