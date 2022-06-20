@@ -135,6 +135,7 @@
     <ItemGroup>
         <Folder Include="Resources\" />
         <Folder Include="Views\" />
+        <Folder Include="Sources\" />
     </ItemGroup>
     <ItemGroup>
         <InterfaceDefinition Include="LaunchScreen.storyboard" />
@@ -160,6 +161,7 @@
         <Compile Include="Views\SearchView.designer.cs">
           <DependentUpon>SearchView.cs</DependentUpon>
         </Compile>
+        <Compile Include="Sources\MedicinesTableViewSource.cs" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\MvvmCrossApp.Core\MvvmCrossApp.Core.csproj">
