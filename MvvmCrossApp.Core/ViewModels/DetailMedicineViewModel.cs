@@ -1,10 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
 using MvvmCross.Commands;
-using MvvmCross.IoC;
-using MvvmCross.Navigation;
 using MvvmCrossApp.Core.Models;
 using MvvmCrossApp.Core.Services;
 using MvvmCrossApp.Core.Wrappers;
@@ -16,11 +13,10 @@ namespace MvvmCrossApp.Core.ViewModels
     {
         readonly ICimaService _cimaService;
         readonly IBrowserWrapper _browserWrapper;
+
         string _nregistro;
 
-        public DetailMedicineViewModel(IMvxNavigationService navigationService, ILogger<DetailMedicineViewModel> logger, 
-            ICimaService cimaService, IMvxIoCProvider ioCProvider, IBrowserWrapper browserWrapper) 
-            : base(navigationService, logger, ioCProvider)
+        public DetailMedicineViewModel(ICimaService cimaService, IBrowserWrapper browserWrapper)
         {
             _cimaService = cimaService;
             _browserWrapper = browserWrapper;
@@ -61,7 +57,7 @@ namespace MvvmCrossApp.Core.ViewModels
             }
             catch (Exception e)
             {
-                _logger.LogError("Fail to get medicine", e.Message);
+                
             }
         }
 
@@ -80,7 +76,6 @@ namespace MvvmCrossApp.Core.ViewModels
                     else if (response.IsFaulted)
                     {
                         IsLoading = false;
-                        _logger.LogError("Fail to get medicine");
                     }
 
                 }, TaskScheduler.FromCurrentSynchronizationContext()).ConfigureAwait(false);

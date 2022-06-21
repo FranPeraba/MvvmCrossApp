@@ -1,8 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
 using MvvmCross.Commands;
-using MvvmCross.IoC;
 using MvvmCross.Navigation;
 using MvvmCrossApp.Core.Models;
 using MvvmCrossApp.Core.Services;
@@ -12,11 +10,12 @@ namespace MvvmCrossApp.Core.ViewModels
     public class SearchMedicinesViewModel : BaseViewModel
     {
         readonly ICimaService _cimaService;
+        readonly IMvxNavigationService _navigationService;
 
-        public SearchMedicinesViewModel(IMvxNavigationService navigationService, ILogger<SearchMedicinesViewModel> logger, 
-            ICimaService cimaService, IMvxIoCProvider ioCProvider) : base(navigationService, logger, ioCProvider)
+        public SearchMedicinesViewModel(IMvxNavigationService navigationService, ICimaService cimaService)
         {
             _cimaService = cimaService;
+            _navigationService = navigationService;
 
             Medicines = new ObservableCollection<Medicines>();
             
@@ -75,7 +74,6 @@ namespace MvvmCrossApp.Core.ViewModels
                     else if (response.IsFaulted)
                     {
                         IsLoading = false;
-                        _logger.LogError("Fail to get medicines");
                     }
                 }, TaskScheduler.FromCurrentSynchronizationContext()).ConfigureAwait(false);
         }
