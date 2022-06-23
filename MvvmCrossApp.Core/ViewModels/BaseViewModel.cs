@@ -12,11 +12,7 @@ namespace MvvmCrossApp.Core.ViewModels
         public bool IsLoading
         {
             get => _isLoading;
-            protected set
-            {
-                _isLoading = value;
-                RaisePropertyChanged(() => IsLoading);
-            }
+            protected set => SetProperty(ref _isLoading, value);
         }
     }
 }

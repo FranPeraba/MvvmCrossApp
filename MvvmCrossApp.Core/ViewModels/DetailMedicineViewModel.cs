@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using MvvmCross.Commands;
 using MvvmCrossApp.Core.Models;
@@ -33,11 +34,7 @@ namespace MvvmCrossApp.Core.ViewModels
         public string Name
         {
             get => _name;
-            private set
-            {
-                _name = value;
-                RaisePropertyChanged(() => Name);
-            }
+            private set => SetProperty(ref _name, value);
         }
 
         public List<Document> Documents { get; private set; }
@@ -55,9 +52,9 @@ namespace MvvmCrossApp.Core.ViewModels
                 if (!string.IsNullOrEmpty(_nregistro))
                     await GetMedicineAsync(_nregistro);
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                
+                Debug.WriteLine("Failed to load medicine");
             }
         }
 

@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
 using MvvmCross.Commands;
 using MvvmCross.Navigation;
 using MvvmCrossApp.Core.Helpers;
@@ -29,11 +31,7 @@ namespace MvvmCrossApp.Core.ViewModels
         public ObservableRangeCollection<Medicines> Medicines
         {
             get => _medicines;
-            private set
-            {
-                _medicines = value;
-                RaisePropertyChanged(() => Medicines);
-            }
+            private set => SetProperty(ref _medicines, value);
         }
 
         string _searchTerm;
@@ -49,10 +47,16 @@ namespace MvvmCrossApp.Core.ViewModels
                 }
                 else if (value.Length >= 3)
                 {
-                    SearchMedicinesAsync(value).ConfigureAwait(false);
+                    try
+                    {
+                        SearchMedicinesAsync(value).ConfigureAwait(false);
+                    }
+                    catch (Exception)
+                    {
+                        Debug.WriteLine("Failed to load medicines");
+                    }
                 }
                 RaisePropertyChanged(() => SearchTerm);
-                RaisePropertyChanged(() => Medicines);
             }
         }
 
