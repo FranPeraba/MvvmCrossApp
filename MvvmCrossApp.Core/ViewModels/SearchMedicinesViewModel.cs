@@ -1,7 +1,7 @@
-﻿using System.Collections.ObjectModel;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using MvvmCross.Commands;
 using MvvmCross.Navigation;
+using MvvmCrossApp.Core.Helpers;
 using MvvmCrossApp.Core.Models;
 using MvvmCrossApp.Core.Services;
 
@@ -17,7 +17,7 @@ namespace MvvmCrossApp.Core.ViewModels
             _cimaService = cimaService;
             _navigationService = navigationService;
 
-            Medicines = new ObservableCollection<Medicines>();
+            Medicines = new ObservableRangeCollection<Medicines>();
             
             _medicineClickCommand = new MvxCommand<Medicines>(OnMedicineClick);
         }
@@ -25,8 +25,8 @@ namespace MvvmCrossApp.Core.ViewModels
         IMvxCommand<Medicines> _medicineClickCommand;
         public IMvxCommand<Medicines> MedicineClickCommand => _medicineClickCommand;
 
-        ObservableCollection<Medicines> _medicines;
-        public ObservableCollection<Medicines> Medicines
+        ObservableRangeCollection<Medicines> _medicines;
+        public ObservableRangeCollection<Medicines> Medicines
         {
             get => _medicines;
             private set
@@ -66,10 +66,7 @@ namespace MvvmCrossApp.Core.ViewModels
                     {
                         IsLoading = false;
                         Medicines.Clear();
-                        foreach (var medicine in response.Result.Resultados)
-                        {
-                            Medicines.Add(medicine);
-                        }
+                        Medicines.AddRange(response.Result.Resultados);
                     }
                     else if (response.IsFaulted)
                     {
