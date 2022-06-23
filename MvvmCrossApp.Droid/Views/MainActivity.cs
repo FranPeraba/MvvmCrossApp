@@ -2,7 +2,6 @@
 using Android.OS;
 using AndroidX.RecyclerView.Widget;
 using MvvmCross.DroidX.RecyclerView;
-using MvvmCross.Platforms.Android.Binding.BindingContext;
 using MvvmCross.Platforms.Android.Presenters.Attributes;
 using MvvmCross.Platforms.Android.Views;
 using MvvmCrossApp.Core.Resources;
@@ -16,7 +15,6 @@ namespace MvvmCrossApp.Droid.Views
     public class MainActivity : MvxActivity<SearchMedicinesViewModel>, SearchView.IOnQueryTextListener
     {
         MvxRecyclerView _recyclerView;
-        MedicinesAdapter _adapter;
         SearchView _searchView;
 
         protected override void OnCreate(Bundle savedInstanceState)
@@ -43,15 +41,9 @@ namespace MvvmCrossApp.Droid.Views
 
         void SetupRecyclerView()
         {
-            _adapter = new MedicinesAdapter((IMvxAndroidBindingContext)BindingContext)
-            {
-                VM = ViewModel
-            };
-
             _recyclerView = FindViewById<MvxRecyclerView>(Resource.Id.main_recycler_view);
             var layoutManager = new LinearLayoutManager(this);
             _recyclerView.SetLayoutManager(layoutManager);
-            _recyclerView.Adapter = _adapter;
         }
 
         public bool OnQueryTextChange(string newText)

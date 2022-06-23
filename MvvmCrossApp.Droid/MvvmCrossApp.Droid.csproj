@@ -68,8 +68,6 @@
     <Compile Include="MainApplication.cs" />
     <Compile Include="Views\DetailActivity.cs" />
     <Compile Include="Views\MainActivity.cs" />
-    <Compile Include="Views\MedicinesViewHolder.cs" />
-    <Compile Include="Views\MedicinesAdapter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
