@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<views:MvxContentPage x:TypeArguments="viewModels:SearchMedicinesViewModel"
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:views="clr-namespace:MvvmCross.Forms.Views;assembly=MvvmCross.Forms"
+    xmlns:mvx="clr-namespace:MvvmCross.Forms.Bindings;assembly=MvvmCross.Forms"
+    xmlns:viewModels="clr-namespace:MvvmCrossApp.Core.ViewModels;assembly=MvvmCrossApp.Core"
+    x:Class="MvvmCrossApp.Forms.UI.Views.MainView">
+
+    <StackLayout>
+        <SearchBar Placeholder="{mvx:MvxBind [QueryHintSearch]}"
+                   Text="{mvx:MvxBind SearchTerm, Mode=TwoWay}"/>
+        <views:MvxListView
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="FillAndExpand"
+            SelectionMode="None"
+            ItemsSource="{mvx:MvxBind Medicines}"
+            ItemClick="{mvx:MvxBind MedicineClickCommand}"
+            BackgroundColor="Transparent"
+            SeparatorVisibility="None">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <views:MvxViewCell>
+                        <StackLayout
+                            Orientation="Horizontal">
+                            <Label
+                                FontSize="Title"
+                                Margin="10,0,0,0"
+                                HorizontalOptions="Start"
+                                HorizontalTextAlignment="Start"
+                                VerticalOptions="Center" 
+                                VerticalTextAlignment="Center"
+                                TextColor="Black"
+                                FontAttributes="None"
+                                Text="{mvx:MvxBind Nombre}"/>
+                        </StackLayout>
+                    </views:MvxViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </views:MvxListView>
+    </StackLayout>
+</views:MvxContentPage>
+
