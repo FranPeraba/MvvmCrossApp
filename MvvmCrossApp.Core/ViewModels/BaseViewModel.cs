@@ -1,4 +1,5 @@
 using MvvmCross.ViewModels;
+using MvvmCrossApp.Core.Resources;
 
 namespace MvvmCrossApp.Core.ViewModels
 {
@@ -7,7 +8,9 @@ namespace MvvmCrossApp.Core.ViewModels
         protected BaseViewModel()
         {
         }
-        
+
+        public string this[string index] => Strings.ResourceManager.GetString(index);
+
         bool _isLoading;
         public bool IsLoading
         {
