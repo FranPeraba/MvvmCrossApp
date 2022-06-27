@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvvmCrossApp.Forms.UI", "Mv
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvvmCrossApp.Forms.Droid", "MvvmCrossApp.Forms.Droid\MvvmCrossApp.Forms.Droid.csproj", "{A27F7951-3612-486A-85D9-D655022962A9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvvmCrossApp.Forms.iOS", "MvvmCrossApp.Forms.iOS\MvvmCrossApp.Forms.iOS.csproj", "{08E3D5DA-E278-4D68-89F3-55EBDFA5647B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -97,6 +99,18 @@ Global
 		{A27F7951-3612-486A-85D9-D655022962A9}.Debug|iPhone.Build.0 = Debug|Any CPU
 		{A27F7951-3612-486A-85D9-D655022962A9}.Release|iPhone.ActiveCfg = Release|Any CPU
 		{A27F7951-3612-486A-85D9-D655022962A9}.Release|iPhone.Build.0 = Release|Any CPU
+		{08E3D5DA-E278-4D68-89F3-55EBDFA5647B}.Debug|Any CPU.ActiveCfg = Debug|iPhoneSimulator
+		{08E3D5DA-E278-4D68-89F3-55EBDFA5647B}.Debug|Any CPU.Build.0 = Debug|iPhoneSimulator
+		{08E3D5DA-E278-4D68-89F3-55EBDFA5647B}.Release|Any CPU.ActiveCfg = Release|iPhoneSimulator
+		{08E3D5DA-E278-4D68-89F3-55EBDFA5647B}.Release|Any CPU.Build.0 = Release|iPhoneSimulator
+		{08E3D5DA-E278-4D68-89F3-55EBDFA5647B}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{08E3D5DA-E278-4D68-89F3-55EBDFA5647B}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{08E3D5DA-E278-4D68-89F3-55EBDFA5647B}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{08E3D5DA-E278-4D68-89F3-55EBDFA5647B}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+		{08E3D5DA-E278-4D68-89F3-55EBDFA5647B}.Debug|iPhone.ActiveCfg = Debug|iPhone
+		{08E3D5DA-E278-4D68-89F3-55EBDFA5647B}.Debug|iPhone.Build.0 = Debug|iPhone
+		{08E3D5DA-E278-4D68-89F3-55EBDFA5647B}.Release|iPhone.ActiveCfg = Release|iPhone
+		{08E3D5DA-E278-4D68-89F3-55EBDFA5647B}.Release|iPhone.Build.0 = Release|iPhone
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
