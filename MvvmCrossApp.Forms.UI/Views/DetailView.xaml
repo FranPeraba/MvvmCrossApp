@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<views:MvxContentPage x:TypeArguments="viewModels:DetailMedicineViewModel"
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:views="clr-namespace:MvvmCross.Forms.Views;assembly=MvvmCross.Forms"
+    xmlns:mvx="clr-namespace:MvvmCross.Forms.Bindings;assembly=MvvmCross.Forms"
+    xmlns:viewModels="clr-namespace:MvvmCrossApp.Core.ViewModels;assembly=MvvmCrossApp.Core"
+    x:Class="MvvmCrossApp.Forms.UI.Views.DetailView"
+    mvx:Bi.nd="Title [Medicine]">
+    <ContentPage.Content>
+        <StackLayout>
+            <ActivityIndicator Color="#2196F3" IsRunning="True"
+                               IsVisible="{mvx:MvxBind IsLoading}"/>
+            <Label
+                HorizontalOptions="CenterAndExpand"
+                HorizontalTextAlignment="Center"
+                Margin="16"
+                FontSize="Medium"
+                mvx:Bi.nd="Text Name"/>
+            <Button
+                Margin="16"
+                BackgroundColor="#2196F3"
+                TextColor="White"
+                mvx:Bi.nd="Text [Prospect]"
+                Command="{mvx:MvxBind OpenDocumentAsyncCommand}"/>
+        </StackLayout>
+    </ContentPage.Content>
+</views:MvxContentPage>
+
