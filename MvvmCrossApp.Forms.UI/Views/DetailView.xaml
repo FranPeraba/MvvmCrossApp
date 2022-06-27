@@ -10,6 +10,7 @@
     <ContentPage.Content>
         <StackLayout>
             <ActivityIndicator Color="#2196F3" IsRunning="True"
+                               Margin="0,8"
                                IsVisible="{mvx:MvxBind IsLoading}"/>
             <Label
                 HorizontalOptions="CenterAndExpand"
