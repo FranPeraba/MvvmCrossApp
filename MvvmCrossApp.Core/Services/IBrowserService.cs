@@ -1,10 +1,12 @@
+﻿using System;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
 
-namespace MvvmCrossApp.Core.Wrappers
+namespace MvvmCrossApp.Core.Services
 {
-    public interface IBrowserWrapper
+    public interface IBrowserService
     {
         Task Browser(string uri, BrowserLaunchMode browserLaunchMode);
     }
 }
+

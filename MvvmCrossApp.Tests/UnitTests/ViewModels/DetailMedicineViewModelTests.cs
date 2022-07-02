@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Autofac.Extras.Moq;
@@ -7,7 +6,6 @@ using Moq;
 using MvvmCrossApp.Core.Models;
 using MvvmCrossApp.Core.Services;
 using MvvmCrossApp.Core.ViewModels;
-using MvvmCrossApp.Core.Wrappers;
 using Xamarin.Essentials;
 using Xunit;
 
@@ -177,7 +175,7 @@ namespace MvvmCrossApp.Tests.UnitTests.ViewModels
 
                 detailMedicineViewModel.Documents.AddRange(documents);
 
-                mock.Mock<IBrowserWrapper>().Setup(br => br.Browser(expectedDocument, BrowserLaunchMode.SystemPreferred))
+                mock.Mock<IBrowserService>().Setup(br => br.Browser(expectedDocument, BrowserLaunchMode.SystemPreferred))
                     .Returns(Task.CompletedTask);
 
                 #endregion
@@ -190,7 +188,7 @@ namespace MvvmCrossApp.Tests.UnitTests.ViewModels
 
                 #region Assert
 
-                mock.Mock<IBrowserWrapper>().Verify(br => br.Browser(expectedDocument, BrowserLaunchMode.SystemPreferred), Times.Once);
+                mock.Mock<IBrowserService>().Verify(br => br.Browser(expectedDocument, BrowserLaunchMode.SystemPreferred), Times.Once);
 
                 #endregion
             }

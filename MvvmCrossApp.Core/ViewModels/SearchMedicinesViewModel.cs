@@ -21,11 +21,10 @@ namespace MvvmCrossApp.Core.ViewModels
 
             Medicines = new ObservableRangeCollection<Medicines>();
             
-            _medicineClickCommand = new MvxCommand<Medicines>(OnMedicineClick);
+            MedicineClickCommand = new MvxCommand<Medicines>(OnMedicineClick);
         }
 
-        IMvxCommand<Medicines> _medicineClickCommand;
-        public IMvxCommand<Medicines> MedicineClickCommand => _medicineClickCommand;
+        public IMvxCommand<Medicines> MedicineClickCommand { get; private set; }
 
         ObservableRangeCollection<Medicines> _medicines;
         public ObservableRangeCollection<Medicines> Medicines
