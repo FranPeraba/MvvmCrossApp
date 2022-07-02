@@ -1,5 +1,6 @@
 ﻿using Android.App;
 using Android.OS;
+using Android.Views;
 using AndroidX.RecyclerView.Widget;
 using MvvmCross.DroidX.RecyclerView;
 using MvvmCross.Platforms.Android.Presenters.Attributes;
@@ -11,7 +12,8 @@ using SearchView = AndroidX.AppCompat.Widget.SearchView;
 namespace MvvmCrossApp.Droid.Views
 {
     [MvxActivityPresentation]
-    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = true)]
+    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = true,
+        WindowSoftInputMode = SoftInput.AdjustResize | SoftInput.StateHidden)]
     public class MainActivity : MvxActivity<SearchMedicinesViewModel>, SearchView.IOnQueryTextListener
     {
         MvxRecyclerView _recyclerView;
