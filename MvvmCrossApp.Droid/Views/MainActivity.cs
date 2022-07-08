@@ -1,8 +1,6 @@
 ﻿using Android.App;
 using Android.OS;
 using Android.Views;
-using AndroidX.RecyclerView.Widget;
-using MvvmCross.DroidX.RecyclerView;
 using MvvmCross.Platforms.Android.Presenters.Attributes;
 using MvvmCross.Platforms.Android.Views;
 using MvvmCrossApp.Core.Resources;
@@ -16,7 +14,6 @@ namespace MvvmCrossApp.Droid.Views
         WindowSoftInputMode = SoftInput.AdjustResize | SoftInput.StateHidden)]
     public class MainActivity : MvxActivity<SearchMedicinesViewModel>, SearchView.IOnQueryTextListener
     {
-        MvxRecyclerView _recyclerView;
         SearchView _searchView;
 
         protected override void OnCreate(Bundle savedInstanceState)
@@ -27,25 +24,7 @@ namespace MvvmCrossApp.Droid.Views
 
             SetupSearchView();
 
-            SetupRecyclerView();
-
             Title = Strings.SearchMedicine;
-        }
-
-        void SetupSearchView()
-        {
-            _searchView = FindViewById<SearchView>(Resource.Id.main_search_view);
-            _searchView.QueryHint = Strings.QueryHintSearch;
-            _searchView.SetOnQueryTextListener(this);
-            _searchView.SetIconifiedByDefault(false);
-            _searchView.Focusable = false;
-        }
-
-        void SetupRecyclerView()
-        {
-            _recyclerView = FindViewById<MvxRecyclerView>(Resource.Id.main_recycler_view);
-            var layoutManager = new LinearLayoutManager(this);
-            _recyclerView.SetLayoutManager(layoutManager);
         }
 
         public bool OnQueryTextChange(string newText)
@@ -57,6 +36,15 @@ namespace MvvmCrossApp.Droid.Views
         public bool OnQueryTextSubmit(string newText)
         {
             return false;
+        }
+
+        void SetupSearchView()
+        {
+            _searchView = FindViewById<SearchView>(Resource.Id.main_search_view);
+            _searchView.QueryHint = Strings.QueryHintSearch;
+            _searchView.SetOnQueryTextListener(this);
+            _searchView.SetIconifiedByDefault(false);
+            _searchView.Focusable = false;
         }
     }
 }
