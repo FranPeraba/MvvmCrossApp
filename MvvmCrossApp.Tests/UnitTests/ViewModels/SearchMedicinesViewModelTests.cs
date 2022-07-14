@@ -33,7 +33,7 @@ namespace MvvmCrossApp.Tests.UnitTests.ViewModels
                 
                 searchMedicinesViewModel.PropertyChanged += (o, e) =>
                 {
-                    if (e.PropertyName == nameof(SearchMedicinesViewModel.IsLoading) && !searchMedicinesViewModel.IsLoading)
+                    if (e.PropertyName == nameof(SearchMedicinesViewModel.IsLoading))
                         tcs.SetResult(true);
                 };
                 
