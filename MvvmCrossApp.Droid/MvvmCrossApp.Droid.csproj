@@ -127,9 +127,6 @@
     <PackageReference Include="MvvmCross">
       <Version>8.0.2</Version>
     </PackageReference>
-    <PackageReference Include="Newtonsoft.Json">
-      <Version>13.0.1</Version>
-    </PackageReference>
     <PackageReference Include="Serilog.Extensions.Logging">
       <Version>3.1.0</Version>
     </PackageReference>
@@ -137,7 +134,7 @@
       <Version>0.2.0.64</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions">
-      <Version>6.0.0</Version>
+      <Version>6.0.1</Version>
     </PackageReference>
     <PackageReference Include="MvvmCross.DroidX.RecyclerView">
       <Version>8.0.2</Version>
