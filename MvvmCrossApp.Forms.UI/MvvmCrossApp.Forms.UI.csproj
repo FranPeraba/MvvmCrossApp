@@ -7,9 +7,11 @@
   <ItemGroup>
     <None Remove="MvvmCross.Forms" />
     <None Remove="Views\" />
+    <None Remove="Microsoft.Extensions.DependencyInjection" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MvvmCross.Forms" Version="8.0.2" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MvvmCrossApp.Core\MvvmCrossApp.Core.csproj" />
