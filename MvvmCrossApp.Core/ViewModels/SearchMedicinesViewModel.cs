@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Net;
+using System.Text.Json;
 using System.Threading.Tasks;
 using MvvmCross.Commands;
 using MvvmCross.Navigation;
@@ -62,20 +64,21 @@ namespace MvvmCrossApp.Core.ViewModels
         async Task SearchMedicinesAsync(string query)
         {
             IsLoading = true;
-            await _cimaService.GetMedicinesAsync(query)
-                .ContinueWith(response =>
-                {
-                    if (response.IsCompleted && response.Status == TaskStatus.RanToCompletion)
-                    {
-                        IsLoading = false;
-                        Medicines.Clear();
-                        Medicines.AddRange(response.Result.Resultados);
-                    }
-                    else if (response.IsFaulted)
-                    {
-                        IsLoading = false;
-                    }
-                }, TaskScheduler.FromCurrentSynchronizationContext()).ConfigureAwait(false);
+            var response = await _cimaService.GetMedicinesAsync(query);
+
+            if (response.IsSuccessStatusCode)
+            {
+                IsLoading = false;
+                Medicines.Clear();
+                var responseContent = await response.Content.ReadAsStringAsync();
+                var medicines = JsonSerializer.Deserialize<PagedResult<Medicines>>(responseContent,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                Medicines.AddRange(medicines.Resultados);
+            }
+            else
+            {
+                IsLoading = false;
+            }
         }
 
         void OnMedicineClick(Medicines medicine)

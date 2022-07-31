@@ -1,4 +1,7 @@
 using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac.Extras.Moq;
@@ -24,9 +27,9 @@ namespace MvvmCrossApp.Tests.UnitTests.ViewModels
                 
                 SearchMedicinesViewModel searchMedicinesViewModel = mock.Create<SearchMedicinesViewModel>();
                 string query = "Medicine";
-                
+
                 mock.Mock<ICimaService>().Setup(cs => cs.GetMedicinesAsync(It.IsAny<string>()))
-                    .Returns(Task.FromResult(new PagedResult<Medicines>{ Resultados = new List<Medicines>() }));
+                    .Returns(Task.FromResult(new HttpResponseMessage()));
                 
                 var tcs = new TaskCompletionSource<bool>();
                 var timeout = Task.Delay(10000);
@@ -61,7 +64,7 @@ namespace MvvmCrossApp.Tests.UnitTests.ViewModels
             using (var mock = AutoMock.GetLoose())
             {
                 #region Arrange
-                
+
                 SearchMedicinesViewModel searchMedicinesViewModel = mock.Create<SearchMedicinesViewModel>();
 
                 string query = "Medicine";
@@ -72,11 +75,13 @@ namespace MvvmCrossApp.Tests.UnitTests.ViewModels
                     new Medicines {Nombre = "Medicine 3", Nregistro = "3"}, new Medicines {Nombre = "Medicine 4", Nregistro = "4"}
                 };
 
+                PagedResult<Medicines> medicines = new PagedResult<Medicines> { Resultados = expectedMedicines };
+
                 mock.Mock<ICimaService>().Setup(cs => cs.GetMedicinesAsync(It.IsAny<string>()))
-                    .Returns(Task.FromResult(new PagedResult<Medicines>{ Resultados = expectedMedicines }));
+                    .Returns(Task.FromResult(new HttpResponseMessage { Content = new StringContent(JsonSerializer.Serialize(medicines, new JsonSerializerOptions { PropertyNameCaseInsensitive = true }))}));
 
                 #endregion
-            
+
                 #region Action
 
                 searchMedicinesViewModel.SearchTerm = query;
